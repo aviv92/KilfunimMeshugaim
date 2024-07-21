@@ -1,7 +1,7 @@
 // src/store.ts
 import { create } from "zustand";
 
-interface Player {
+export interface Player {
   name: string;
   owed: number;
   showMe: boolean;

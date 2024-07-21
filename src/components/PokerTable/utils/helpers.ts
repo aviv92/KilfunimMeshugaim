@@ -1,3 +1,5 @@
+import { Player } from "../../../stores/usePlayerStore";
+
 type Position = {
   left: string;
   top: string;
@@ -21,4 +23,29 @@ export const calculatePositions = (
   }
 
   return positions;
+};
+export const speakOwedAmounts = (players: Player[]) => {
+  const synth = window.speechSynthesis;
+  const utterances: SpeechSynthesisUtterance[] = [];
+
+  const intro = new SpeechSynthesisUtterance("Listen up fishes");
+  utterances.push(intro);
+
+  players.forEach((player) => {
+    const utterance = new SpeechSynthesisUtterance(
+      `${player.name} owes ${player.owed} shekel`
+    );
+    utterances.push(utterance);
+  });
+
+  const speakNext = (index: number) => {
+    if (index < utterances.length) {
+      utterances[index].onend = () => {
+        setTimeout(() => speakNext(index + 1), 100); // Wait for 1 second before the next utterance
+      };
+      synth.speak(utterances[index]);
+    }
+  };
+
+  speakNext(0);
 };

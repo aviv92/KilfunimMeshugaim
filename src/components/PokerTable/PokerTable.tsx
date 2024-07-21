@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { usePlayerStore } from "../../stores"; // Adjust the path according to your store's location
 import styles from "./PokerTable.module.css";
-import { calculatePositions } from "./utils/helpers";
+import { calculatePositions, speakOwedAmounts } from "./utils/helpers";
+import Player from "../Player/Player";
 
 const PokerTable: React.FC = () => {
-  const { players, updateOwed, usedShowMe, quitPlayer } = usePlayerStore();
+  const { players, quitPlayer } = usePlayerStore();
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null);
   const [quittingPlayerId, setQuittingPlayerId] = useState<number | null>(null);
   const [finalAmount, setFinalAmount] = useState<number>(0);
@@ -31,20 +32,14 @@ const PokerTable: React.FC = () => {
     }
   };
 
-  const speakOwedAmounts = () => {
-    const synth = window.speechSynthesis;
-    let utterance = new SpeechSynthesisUtterance();
-    utterance.text = players
-      .map((player) => `${player.name} owes ${player.owed} shekel`)
-      .join(". ");
-    synth.speak(utterance);
-  };
-
   return (
     <div className={styles.table}>
-      <div className={styles.tableTitle}>Aviv's Aquarium</div>
+      <div className={styles.tableTitle}>קלפונים משוגעים</div>
       <div className={styles.controls}>
-        <button onClick={speakOwedAmounts} className={styles.speakButton}>
+        <button
+          onClick={() => speakOwedAmounts(players)}
+          className={styles.speakButton}
+        >
           Speak Owed Amounts
         </button>
       </div>
@@ -65,66 +60,12 @@ const PokerTable: React.FC = () => {
               : setSelectedPlayerId(null);
           }}
         >
-          <div className={styles.playerInfo}>
-            <span className={styles.amount}>
-              {player.name} {player.owed}
-            </span>
-            {player.showMe && (
-              <button
-                className={styles.showBadge}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  usedShowMe(index);
-                }}
-              >
-                S
-              </button>
-            )}
-            <button
-              className={styles.clickableBadge}
-              onClick={(e) => {
-                e.stopPropagation();
-                updateOwed(index, 50);
-              }}
-            >
-              +50
-            </button>
-            {player.hasQuit && (
-              <span className={styles.finalResult}>{player.finalResult}</span>
-            )}
-            {selectedPlayerId === index && (
-              <>
-                <button
-                  className={styles.rebuyButton}
-                  onClick={() => updateOwed(index, 100)}
-                >
-                  תן לי 100
-                </button>
-                <button
-                  className={styles.rebuyButton}
-                  onClick={() => updateOwed(index, 200)}
-                >
-                  תן לי 200
-                </button>
-                {player.showMe && !player.hasQuit && (
-                  <button
-                    className={styles.showButton}
-                    onClick={() => usedShowMe(index)}
-                  >
-                    Show me
-                  </button>
-                )}
-                {!player.hasQuit && (
-                  <button
-                    className={styles.quitButton}
-                    onClick={() => handleQuit(index)}
-                  >
-                    Quit
-                  </button>
-                )}
-              </>
-            )}
-          </div>
+          <Player
+            player={player}
+            handleQuit={handleQuit}
+            index={index}
+            selectedPlayerId={selectedPlayerId}
+          />
         </div>
       ))}
 

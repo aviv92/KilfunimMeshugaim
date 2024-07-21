@@ -79,22 +79,6 @@
   background-color: #218838;
 }
 
-.showButton {
-  padding: 5px 10px;
-  margin-top: 5px;
-  background-color: #ff5733;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 14px;
-}
-
-.showButton:hover {
-  background-color: #c44124;
-}
-
 .showBadge {
   position: absolute;
   top: 0;
