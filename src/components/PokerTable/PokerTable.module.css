@@ -1,0 +1,194 @@
+/* src/components/PokerTable.module.css */
+.table {
+    position: relative;
+    width: 800px;
+    height: 400px;
+    border-radius: 400px / 200px; /* Elliptical shape */
+    background: radial-gradient(circle at center, #2b2b2b, #000000);
+    box-shadow: inset 0 0 10px #000000, 0 8px 16px rgba(0,0,0,0.5);
+    margin: 150px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #663300;
+  }
+  
+  .tableTitle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .player {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    background-color: #1e1e1e;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    border: 2px solid #333;
+    transition: transform 0.3s ease-in-out;
+    animation: popIn 0.5s ease-out forwards;
+  }
+  
+  @keyframes popIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+  }
+  
+  .playerInfo {
+    text-align: center;
+    margin-top: 70px; /* Adjust based on the size of the player circle */
+  }
+  
+  .amount {
+    display: block;
+    color: #ffc107;
+    font-weight: bold;
+  }
+
+  .finalResult {
+    display: block;
+    color: #ff5733;
+    font-weight: bold;
+  }
+  
+  .rebuyButton {
+    padding: 5px 10px;
+    margin-top: 5px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .rebuyButton:hover {
+    background-color: #218838;
+  }
+
+  .showButton {
+    padding: 5px 10px;
+    margin-top: 5px;
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .showButton:hover {
+    background-color: #c44124;
+  }
+
+  .showBadge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ff5733;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    pointer-events: none;
+  }
+
+  .quitButton {
+    padding: 5px 10px;
+    margin-top: 5px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .quitButton:hover {
+    background-color: #c82333;
+  }
+  
+  .quitModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modalContent {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .finalAmountInput {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .confirmButton, .cancelButton {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+  }
+  
+  .confirmButton {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .confirmButton:hover {
+    background-color: #218838;
+  }
+  
+  .cancelButton {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .cancelButton:hover {
+    background-color: #c82333;
+  }
+  
+  .quitPlayer {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  .fish1,.fish7 {background-image:  url('src/assets/angel-fish_7590340.png'); background-size: cover;}
+  .fish2,.fish8 {background-image:  url('src/assets/codfish_7591604.png'); background-size: cover;}
+  .fish3,.fish9 {background-image:  url('src/assets/discus_7590435.png'); background-size: cover;}
+  .fish4,.fish10 {background-image:  url('src/assets/fish_17179924.png'); background-size: cover;}
+  .fish5,.fish11 {background-image:  url('src/assets/grouper_12822411.png'); background-size: cover;}
+  .fish6,.fish12 {background-image:  url('src/assets/fishing-rod_10528670.png'); background-size: cover;}
+  
