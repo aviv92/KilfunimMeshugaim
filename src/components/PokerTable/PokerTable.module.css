@@ -108,7 +108,8 @@
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  pointer-events: none;
+  border: none;
+  cursor: pointer;
 }
 
 .quitButton {
@@ -186,6 +187,26 @@
   opacity: 0.5;
   pointer-events: none;
 }
+.clickableBadge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.clickableBadge:hover {
+  background-color: #0056b3;
+}
 
 .fish1,.fish7 {background-image:  url('src/assets/angel-fish_7590340.png'); background-size: cover;}
 .fish2,.fish8 {background-image:  url('src/assets/codfish_7591604.png'); background-size: cover;}
@@ -210,7 +231,7 @@
     font-size: 12px;
   }
 
-  .showBadge {
+  .showBadge, .clickableBadge {
     width: 15px;
     height: 15px;
     font-size: 10px;
@@ -242,7 +263,7 @@
     font-size: 10px;
   }
 
-  .showBadge {
+  .showBadge, .clickableBadge {
     width: 12px;
     height: 12px;
     font-size: 8px;

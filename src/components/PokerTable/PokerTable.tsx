@@ -55,18 +55,37 @@ const PokerTable: React.FC = () => {
             <span className={styles.amount}>
               {player.name} {player.owed}
             </span>
-            {player.showMe && <span className={styles.showBadge}>Show</span>}
+            {player.showMe && (
+              <button
+                className={styles.showBadge}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  usedShowMe(index);
+                }}
+              >
+                S
+              </button>
+            )}
+            <button
+              className={styles.clickableBadge}
+              onClick={(e) => {
+                e.stopPropagation();
+                updateOwed(index, 50);
+              }}
+            >
+              +50
+            </button>
             {player.hasQuit && (
               <span className={styles.finalResult}>{player.finalResult}</span>
             )}
             {selectedPlayerId === index && (
               <>
-                <button
+                {/* <button
                   className={styles.rebuyButton}
                   onClick={() => updateOwed(index, 50)}
                 >
                   50 תן לי
-                </button>
+                </button> */}
                 <button
                   className={styles.rebuyButton}
                   onClick={() => updateOwed(index, 100)}
