@@ -31,9 +31,23 @@ const PokerTable: React.FC = () => {
     }
   };
 
+  const speakOwedAmounts = () => {
+    const synth = window.speechSynthesis;
+    let utterance = new SpeechSynthesisUtterance();
+    utterance.text = players
+      .map((player) => `${player.name} owes ${player.owed} shekel`)
+      .join(". ");
+    synth.speak(utterance);
+  };
+
   return (
     <div className={styles.table}>
       <div className={styles.tableTitle}>Aviv's Aquarium</div>
+      <div className={styles.controls}>
+        <button onClick={speakOwedAmounts} className={styles.speakButton}>
+          Speak Owed Amounts
+        </button>
+      </div>
       {players.map((player, index) => (
         <div
           key={index}
@@ -80,12 +94,6 @@ const PokerTable: React.FC = () => {
             )}
             {selectedPlayerId === index && (
               <>
-                {/* <button
-                  className={styles.rebuyButton}
-                  onClick={() => updateOwed(index, 50)}
-                >
-                  50 תן לי
-                </button> */}
                 <button
                   className={styles.rebuyButton}
                   onClick={() => updateOwed(index, 100)}
