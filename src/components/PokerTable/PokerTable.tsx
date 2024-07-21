@@ -1,5 +1,5 @@
 // src/components/PokerTable.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePlayerStore } from "../../stores"; // Adjust the path according to your store's location
 import styles from "./PokerTable.module.css";
 import { calculatePositions } from "./utils/helpers";
@@ -9,6 +9,15 @@ const PokerTable: React.FC = () => {
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null);
   const [quittingPlayerId, setQuittingPlayerId] = useState<number | null>(null);
   const [finalAmount, setFinalAmount] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const playerPositions = calculatePositions(players.length, isMobile);
 
   const handleQuit = (index: number) => {
     setQuittingPlayerId(index);
@@ -22,8 +31,6 @@ const PokerTable: React.FC = () => {
     }
   };
 
-  // In your React component's render method or functional component body
-  const playerPositions = calculatePositions(players.length);
   return (
     <div className={styles.table}>
       <div className={styles.tableTitle}>Aviv's Aquarium</div>
@@ -45,7 +52,6 @@ const PokerTable: React.FC = () => {
           }}
         >
           <div className={styles.playerInfo}>
-            <br />
             <span className={styles.amount}>
               {player.name} {player.owed}
             </span>
@@ -73,7 +79,6 @@ const PokerTable: React.FC = () => {
                 >
                   תן לי 200
                 </button>
-
                 {player.showMe && !player.hasQuit && (
                   <button
                     className={styles.showButton}
@@ -87,7 +92,7 @@ const PokerTable: React.FC = () => {
                     className={styles.quitButton}
                     onClick={() => handleQuit(index)}
                   >
-                    אני הולך כמו מלשין גדול
+                    Quit
                   </button>
                 )}
               </>
@@ -95,6 +100,7 @@ const PokerTable: React.FC = () => {
           </div>
         </div>
       ))}
+
       {quittingPlayerId !== null && (
         <div className={styles.quitModal}>
           <div className={styles.modalContent}>
