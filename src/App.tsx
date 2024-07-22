@@ -8,7 +8,7 @@ import PokerTable from "./components/PokerTable/PokerTable";
 
 const App: React.FC = () => {
   return (
-    <div id="root" className={styles.container}>
+    <div className={styles.container}>
       <div className={styles.tableContainer}>
         <PokerTable />
       </div>
