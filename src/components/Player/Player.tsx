@@ -17,8 +17,7 @@ const Player: React.FC<PlayerProps> = ({
   isDisabled = false,
 }) => {
   return (
-    <button
-      key={index}
+    <div
       className={`${styles.player} ${styles[`fish${index + 1}`]} ${
         isDisabled ? "quitPlayer" : ""
       }`}
@@ -26,11 +25,10 @@ const Player: React.FC<PlayerProps> = ({
         left: playerPositions[index].left,
         top: playerPositions[index].top,
       }}
-      onClick={onClick}
-      disabled={isDisabled}
+      onClick={isDisabled ? () => {} : onClick}
     >
       {children}
-    </button>
+    </div>
   );
 };
 

@@ -39,6 +39,7 @@ const PokerTable: React.FC = () => {
       <div className={styles.tableTitle}>קילפונים משוגעים</div>
       {players.map((player, index) => (
         <Player
+          key={`${styles.player}-${index}`}
           index={index}
           playerPositions={playerPositions}
           onClick={
