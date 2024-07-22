@@ -36,7 +36,7 @@ const PokerTable: React.FC = () => {
 
   return (
     <div className={styles.table}>
-      <div className={styles.tableTitle}>קלפונים משוגעים</div>
+      <div className={styles.tableTitle}>קילפונים משוגעים</div>
       <div className={styles.controls}>
         <button
           onClick={() => speakOwedAmounts(players)}
