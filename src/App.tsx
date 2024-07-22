@@ -5,6 +5,7 @@ import EndGame from "./components/EndGame/EndGame";
 import styles from "./App.module.css";
 import AddPlayer from "./components/AddPlayer/AddPlayer";
 import PokerTable from "./components/PokerTable/PokerTable";
+import ReadOweListButton from "./components/ReadOweListButton/ReadOweListButton";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       </div>
       <div className={styles.buttons}>
         <AddPlayer />
+        <ReadOweListButton />
         <EndGame />
       </div>
     </div>

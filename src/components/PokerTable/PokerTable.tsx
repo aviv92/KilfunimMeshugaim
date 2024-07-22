@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { usePlayerStore } from "../../stores"; // Adjust the path according to your store's location
 import styles from "./PokerTable.module.css";
-import { calculatePositions, speakOwedAmounts } from "./utils/helpers";
+import { calculatePositions } from "./utils/helpers";
 import PlayerInfo from "../Player/PlayerInfo";
 import Player from "../Player/Player";
 import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
@@ -37,14 +37,6 @@ const PokerTable: React.FC = () => {
   return (
     <div className={styles.table}>
       <div className={styles.tableTitle}>קילפונים משוגעים</div>
-      <div className={styles.controls}>
-        <button
-          onClick={() => speakOwedAmounts(players)}
-          className={styles.speakButton}
-        >
-          Speak Owed Amounts
-        </button>
-      </div>
       {players.map((player, index) => (
         <Player
           index={index}
