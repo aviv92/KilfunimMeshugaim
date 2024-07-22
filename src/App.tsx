@@ -6,9 +6,9 @@ import styles from "./App.module.css";
 import AddPlayer from "./components/AddPlayer/AddPlayer";
 import PokerTable from "./components/PokerTable/PokerTable";
 
-const Home: React.FC = () => {
+const App: React.FC = () => {
   return (
-    <div className={styles.container}>
+    <div id="root" className={styles.container}>
       <div className={styles.tableContainer}>
         <PokerTable />
       </div>
@@ -18,10 +18,6 @@ const Home: React.FC = () => {
       </div>
     </div>
   );
-};
-
-const App: React.FC = () => {
-  return <Home />;
 };
 
 export default App;
