@@ -1,5 +1,6 @@
 // src/store.ts
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface Player {
   name: string;
@@ -25,39 +26,44 @@ const initialGameState = {
   players: [],
 };
 
-export const usePlayerStore = create<StoreState>((set) => ({
-  ...initialGameState,
-  setInputName: (name) => set({ inputName: name }),
-  addPlayers: (names, initialAmount) =>
-    set((state) => ({
-      players: [
-        ...state.players,
-        ...names.map((name) => ({
-          name,
-          owed: initialAmount,
-          showMe: true,
-          hasQuit: false,
+export const usePlayerStore = create<StoreState>()(
+  persist(
+    (set) => ({
+      ...initialGameState,
+      setInputName: (name) => set({ inputName: name }),
+      addPlayers: (names, initialAmount) =>
+        set((state) => ({
+          players: [
+            ...state.players,
+            ...names.map((name) => ({
+              name,
+              owed: initialAmount,
+              showMe: true,
+              hasQuit: false,
+            })),
+          ],
         })),
-      ],
-    })),
-  updateOwed: (index, amount) =>
-    set((state) => {
-      const newPlayers = state.players;
-      newPlayers[index].owed += amount;
-      return { players: newPlayers };
+      updateOwed: (index, amount) =>
+        set((state) => {
+          const newPlayers = state.players;
+          newPlayers[index].owed += amount;
+          return { players: newPlayers };
+        }),
+      usedShowMe: (index) =>
+        set((state) => {
+          const newPlayers = [...state.players];
+          newPlayers[index].showMe = false;
+          return { players: newPlayers };
+        }),
+      quitPlayer: (index, finalResult) =>
+        set((state) => {
+          const newPlayers = [...state.players];
+          newPlayers[index].hasQuit = true;
+          newPlayers[index].finalResult = finalResult;
+          return { players: newPlayers };
+        }),
+      endGame: () => set({ ...initialGameState }),
     }),
-  usedShowMe: (index) =>
-    set((state) => {
-      const newPlayers = [...state.players];
-      newPlayers[index].showMe = false;
-      return { players: newPlayers };
-    }),
-  quitPlayer: (index, finalResult) =>
-    set((state) => {
-      const newPlayers = [...state.players];
-      newPlayers[index].hasQuit = true;
-      newPlayers[index].finalResult = finalResult;
-      return { players: newPlayers };
-    }),
-  endGame: () => set({ ...initialGameState }),
-}));
+    { name: "player-storage" }
+  )
+);
