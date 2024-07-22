@@ -1,5 +1,5 @@
 import { FC } from "react";
-import styles from "../PokerTable/PokerTable.module.css";
+import styles from "../Player/Player.module.css";
 import { usePlayerStore } from "../../stores";
 import { Player } from "../../stores/usePlayerStore";
 

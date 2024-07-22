@@ -5,15 +5,15 @@ export interface Player {
   name: string;
   owed: number;
   showMe: boolean;
-  hasQuit: boolean; // New property to track quit status
-  finalResult?: number; // New property to track the final result
+  hasQuit: boolean;
+  finalResult?: number;
 }
 
 interface StoreState {
-  inputName: string; // New state for input field
+  inputName: string;
   players: Player[];
-  setInputName: (name: string) => void; // New action to set input name
-  addPlayers: (names: string[], initialAmount: number) => void; // New action to handle multiple players
+  setInputName: (name: string) => void;
+  addPlayers: (names: string[], initialAmount: number) => void;
   updateOwed: (index: number, amount: number) => void;
   endGame: () => void;
   usedShowMe: (index: number) => void;

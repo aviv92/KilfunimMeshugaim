@@ -1,49 +1,37 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
+import { Position } from "../PokerTable/utils/helpers";
 import styles from "./Player.module.css";
-import { Player, usePlayerStore } from "../../stores/usePlayerStore";
-import PlayerActions from "./PlayerActions";
 
 type PlayerProps = {
-  player: Player;
-  handleQuit: (index: number) => void;
   index: number;
-  selectedPlayerId: number | null;
-};
+  onClick: () => void;
+  playerPositions: Position[];
+  isDisabled?: boolean;
+} & PropsWithChildren;
 
-const PlayerInfo: FC<PlayerProps> = ({ selectedPlayerId, ...actionsProps }) => {
-  const { player, index } = actionsProps;
-  const { updateOwed, usedShowMe } = usePlayerStore();
+const Player: FC<PlayerProps> = ({
+  children,
+  index,
+  onClick,
+  playerPositions,
+  isDisabled = false,
+}) => {
   return (
-    <div className={styles.playerInfo}>
-      <span className={styles.amount}>
-        {player.name} {player.owed}
-      </span>
-      {player.showMe && (
-        <button
-          className={styles.showBadge}
-          onClick={(e) => {
-            e.stopPropagation();
-            usedShowMe(index);
-          }}
-        >
-          S
-        </button>
-      )}
-      <button
-        className={styles.clickableBadge}
-        onClick={(e) => {
-          e.stopPropagation();
-          updateOwed(index, 50);
-        }}
-      >
-        +50
-      </button>
-      {player.hasQuit && (
-        <span className={styles.finalResult}>{player.finalResult}</span>
-      )}
-      {selectedPlayerId === index && <PlayerActions {...actionsProps} />}
-    </div>
+    <button
+      key={index}
+      className={`${styles.player} ${styles[`fish${index + 1}`]} ${
+        isDisabled ? "quitPlayer" : ""
+      }`}
+      style={{
+        left: playerPositions[index].left,
+        top: playerPositions[index].top,
+      }}
+      onClick={onClick}
+      disabled={isDisabled}
+    >
+      {children}
+    </button>
   );
 };
 
-export default PlayerInfo;
+export default Player;

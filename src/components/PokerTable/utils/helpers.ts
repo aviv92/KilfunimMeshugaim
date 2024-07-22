@@ -1,6 +1,6 @@
 import { Player } from "../../../stores/usePlayerStore";
 
-type Position = {
+export type Position = {
   left: string;
   top: string;
 };
@@ -11,9 +11,9 @@ export const calculatePositions = (
 ): Position[] => {
   const positions: Position[] = [];
   const a = isMobile ? 170 : 460; // horizontal radius of the ellipse in pixels
-  const b = isMobile ? 180 : 260; // vertical radius of the ellipse in pixels
+  const b = isMobile ? 180 : 320; // vertical radius of the ellipse in pixels
   const centerX = isMobile ? 170 : 400; // center X coordinate
-  const centerY = isMobile ? 180 : 200; // center Y coordinate
+  const centerY = isMobile ? 180 : 260; // center Y coordinate
 
   for (let i = 0; i < numPlayers; i++) {
     const angle = ((2 * Math.PI) / numPlayers) * i; // angle in radians
@@ -27,6 +27,9 @@ export const calculatePositions = (
 export const speakOwedAmounts = (players: Player[]) => {
   const synth = window.speechSynthesis;
   const utterances: SpeechSynthesisUtterance[] = [];
+
+  const introYOYO = new SpeechSynthesisUtterance("Yo Yo Yo");
+  utterances.push(introYOYO);
 
   const intro = new SpeechSynthesisUtterance("Listen up fishes");
   utterances.push(intro);
