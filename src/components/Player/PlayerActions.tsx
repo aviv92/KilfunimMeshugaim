@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import styles from "../Player/Player.module.css";
 import { usePlayerStore } from "../../stores";
 import { Player } from "../../stores/usePlayerStore";
@@ -9,7 +9,7 @@ type PlayerActionsProps = {
   player: Player;
 };
 
-const PlayerActions: FC<PlayerActionsProps> = ({
+const PlayerActions: React.FC<PlayerActionsProps> = ({
   handleQuit,
   index,
   player,

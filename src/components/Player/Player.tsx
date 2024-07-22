@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import React from "react";
 import { Position } from "../PokerTable/utils/helpers";
 import styles from "./Player.module.css";
 
@@ -7,9 +7,9 @@ type PlayerProps = {
   onClick: () => void;
   playerPositions: Position[];
   isDisabled?: boolean;
-} & PropsWithChildren;
+} & React.PropsWithChildren;
 
-const Player: FC<PlayerProps> = ({
+const Player: React.FC<PlayerProps> = ({
   children,
   index,
   onClick,

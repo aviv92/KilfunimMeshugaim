@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React from "react";
 import { usePlayerStore } from "../../stores";
 import styles from "./EndGame.module.css";
 
-const EndGame: FC = () => {
+const EndGame: React.FC = () => {
   const { players, endGame } = usePlayerStore();
 
   const handleEndGame = () => {

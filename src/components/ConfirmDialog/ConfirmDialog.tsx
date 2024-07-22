@@ -1,13 +1,13 @@
-import React, { FC, ReactNode } from "react";
+import React from "react";
 import styles from "./ConfirmDialog.module.css";
 
 type ConfirmDialogProps = {
-  title: ReactNode | string;
-  content: ReactNode;
+  title: React.ReactNode | string;
+  content: React.ReactNode;
   onConfirm: () => void;
   onCancel: () => void;
 };
-const ConfirmDialog: FC<ConfirmDialogProps> = ({
+const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   content,
   onCancel,
   onConfirm,

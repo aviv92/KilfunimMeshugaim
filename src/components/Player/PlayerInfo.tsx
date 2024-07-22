@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import styles from "./Player.module.css";
 import { Player, usePlayerStore } from "../../stores/usePlayerStore";
 import PlayerActions from "./PlayerActions";
@@ -10,7 +10,10 @@ type PlayerProps = {
   selectedPlayerId: number | null;
 };
 
-const PlayerInfo: FC<PlayerProps> = ({ selectedPlayerId, ...actionsProps }) => {
+const PlayerInfo: React.FC<PlayerProps> = ({
+  selectedPlayerId,
+  ...actionsProps
+}) => {
   const { player, index } = actionsProps;
   const { updateOwed, usedShowMe } = usePlayerStore();
   return (
