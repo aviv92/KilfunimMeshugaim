@@ -8,16 +8,15 @@ import PokerTable from "./components/PokerTable/PokerTable";
 
 const App: React.FC = () => {
   return (
-    // <div className={styles.container}>
-    //   <div className={styles.tableContainer}>
-    //     <PokerTable />
-    //   </div>
-    //   <div className={styles.buttons}>
-    //     <AddPlayer />
-    //     <EndGame />
-    //   </div>
-    // </div>
-    <div>Hello fish-fish</div>
+    <div className={styles.container}>
+      <div className={styles.tableContainer}>
+        <PokerTable />
+      </div>
+      <div className={styles.buttons}>
+        <AddPlayer />
+        <EndGame />
+      </div>
+    </div>
   );
 };
 
