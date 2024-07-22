@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import styles from "./Player.module.css";
 import { Player, usePlayerStore } from "../../stores/usePlayerStore";
 import PlayerActions from "./PlayerActions";
