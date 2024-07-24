@@ -36,7 +36,7 @@ export const speakOwedAmounts = (players: Player[]) => {
 
   players.forEach((player) => {
     const utterance = new SpeechSynthesisUtterance(
-      `${player.name} owes ${player.owed} shekel`
+      `${player.name} ${player.owed}`
     );
     utterances.push(utterance);
   });
@@ -44,7 +44,7 @@ export const speakOwedAmounts = (players: Player[]) => {
   const speakNext = (index: number) => {
     if (index < utterances.length) {
       utterances[index].onend = () => {
-        setTimeout(() => speakNext(index + 1), 100); // Wait for 1 second before the next utterance
+        setTimeout(() => speakNext(index + 1), 100); // Wait for 100 ms before the next utterance
       };
       synth.speak(utterances[index]);
     }

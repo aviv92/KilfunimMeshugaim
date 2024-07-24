@@ -10,7 +10,7 @@ const ReadOweListButton: React.FC = () => {
       onClick={() => speakOwedAmounts(players)}
       className={styles.speakButton}
     >
-      Speak Owed Amounts
+      Read list
     </button>
   );
 };
