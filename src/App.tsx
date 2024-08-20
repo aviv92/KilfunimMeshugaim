@@ -1,24 +1,45 @@
-// src/App.tsx
-import React from "react";
-
-import EndGame from "./components/EndGame/EndGame";
-import styles from "./App.module.css";
+import { FC } from "react";
+import TopBar from "./layout/TopBar";
+import PlayerTable from "./components/PlayerTable/PlayerTable";
+import ControlPanel from "./components/ControlPanel/ControlPanel";
 import AddPlayer from "./components/AddPlayer/AddPlayer";
-import PokerTable from "./components/PokerTable/PokerTable";
+import EndGame from "./components/EndGame/EndGame";
 import ReadOweListButton from "./components/ReadOweListButton/ReadOweListButton";
 
-const App: React.FC = () => {
+// import EndGame from "./components/EndGame/EndGame";
+// import styles from "./App.module.css";
+// import AddPlayer from "./components/AddPlayer/AddPlayer";
+// import PokerTable from "./components/PokerTable/PokerTable";
+// import ReadOweListButton from "./components/ReadOweListButton/ReadOweListButton";
+
+// const App: React.FC = () => {
+//   return (
+//     <div className={styles.container}>
+//       <div className={styles.tableContainer}>
+//         <PokerTable />
+//       </div>
+//       <div className={styles.buttons}>
+//         <AddPlayer />
+//         <ReadOweListButton />
+//         <EndGame />
+//       </div>
+//     </div>
+//   );
+// };
+
+const App: FC = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.tableContainer}>
-        <PokerTable />
-      </div>
-      <div className={styles.buttons}>
+    <>
+      <TopBar />
+      <PlayerTable />
+      <ControlPanel>
         <AddPlayer />
-        <ReadOweListButton />
+      </ControlPanel>
+      <ControlPanel>
         <EndGame />
-      </div>
-    </div>
+        <ReadOweListButton />
+      </ControlPanel>
+    </>
   );
 };
 

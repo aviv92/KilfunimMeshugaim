@@ -1,6 +1,6 @@
 import React from "react";
 import { usePlayerStore } from "../../stores";
-import styles from "./EndGame.module.css";
+import { Button } from "@mui/material";
 
 const EndGame: React.FC = () => {
   const { players, endGame } = usePlayerStore();
@@ -12,9 +12,9 @@ const EndGame: React.FC = () => {
   };
 
   return (
-    <button className={styles.button} onClick={handleEndGame}>
+    <Button variant="contained" color="secondary" onClick={handleEndGame}>
       End Game
-    </button>
+    </Button>
   );
 };
 

@@ -1,7 +1,6 @@
-// src/components/AddPlayer.tsx
 import React from "react";
 import { usePlayerStore, useSettingsStore } from "../../stores";
-import styles from "./AddPlayer.module.css";
+import { TextField, Button, Box } from "@mui/material";
 
 const AddPlayer: React.FC = () => {
   const { inputName, setInputName, addPlayers } = usePlayerStore();
@@ -30,18 +29,19 @@ const AddPlayer: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <input
-        type="text"
-        placeholder="Enter player name(s), use commas to separate"
+    <Box display="flex" gap="10px">
+      <TextField
+        label="Enter player name(s)"
+        variant="outlined"
+        fullWidth
         value={inputName}
         onChange={(e) => setInputName(e.target.value)}
-        className={styles.input}
+        placeholder="Use commas to separate names"
       />
-      <button className={styles.button} onClick={handleAddPlayer}>
+      <Button variant="contained" color="primary" onClick={handleAddPlayer}>
         Add
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
 
