@@ -1,5 +1,5 @@
-import React from "react";
-import { usePlayerStore, useSettingsStore } from "../../stores";
+import { FC } from "react";
+import { usePlayerStore } from "../../stores";
 import {
   Table,
   TableBody,
@@ -8,77 +8,26 @@ import {
   TableHead,
   TableRow,
   Paper,
-  IconButton,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import RemoveIcon from "@mui/icons-material/Remove";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import PlayerRow from "./PlayerRow";
 
-const PlayerTable: React.FC = () => {
-  const { players, updateOwed, usedShowMe, quitPlayer } = usePlayerStore();
-  const { defaultRebuy } = useSettingsStore();
-
-  const handleQuitPlayer = (index: number) => {
-    const finalResult = prompt("Enter final amount");
-    if (finalResult !== null) {
-      quitPlayer(index, parseFloat(finalResult));
-    }
-  };
+const PlayerTable: FC = () => {
+  const { players } = usePlayerStore();
 
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table size="small" sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow>
-            <TableCell align="left"></TableCell>
-            <TableCell align="right">תוצאה סופית</TableCell>
-            <TableCell align="right">מושקע</TableCell>
-            <TableCell align="right">שחקן</TableCell>
+            <TableCell>Player name</TableCell>
+            <TableCell align="right">Owe</TableCell>
+            <TableCell align="right">Final</TableCell>
+            <TableCell align="right" />
           </TableRow>
         </TableHead>
         <TableBody>
           {players.map((player, index) => (
-            <TableRow key={player.name}>
-              <TableCell align="left">
-                <IconButton
-                  color="error"
-                  onClick={() => handleQuitPlayer(index)}
-                  disabled={player.hasQuit}
-                >
-                  <ExitToAppIcon />
-                </IconButton>
-                <IconButton
-                  color={player.showMe ? "secondary" : "default"}
-                  onClick={() => usedShowMe(index)}
-                  disabled={!player.showMe || player.hasQuit}
-                >
-                  {player.showMe ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                </IconButton>
-                <IconButton
-                  color="primary"
-                  onClick={() => updateOwed(index, defaultRebuy)}
-                  disabled={player.hasQuit}
-                >
-                  <AddIcon />
-                </IconButton>
-                <IconButton
-                  color="primary"
-                  onClick={() => updateOwed(index, defaultRebuy * -1)}
-                  disabled={player.hasQuit || player.owed === defaultRebuy}
-                >
-                  <RemoveIcon />
-                </IconButton>
-              </TableCell>
-              <TableCell align="right">
-                {player.hasQuit ? player?.finalResult : "-"}
-              </TableCell>
-              <TableCell align="right">{player.owed}</TableCell>
-              <TableCell align="right" component="th" scope="row">
-                {player.name}
-              </TableCell>
-            </TableRow>
+            <PlayerRow player={player} index={index} />
           ))}
         </TableBody>
       </Table>
