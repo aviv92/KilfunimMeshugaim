@@ -3,16 +3,10 @@ import { usePlayerStore } from "../../stores";
 import { Button } from "@mui/material";
 
 const EndGame: React.FC = () => {
-  const { players, endGame } = usePlayerStore();
-
-  const handleEndGame = () => {
-    endGame();
-    const totalOwed = players.reduce((sum, player) => sum + player.owed, 0);
-    alert(`Total owed: ${totalOwed}`);
-  };
+  const { endGame } = usePlayerStore();
 
   return (
-    <Button variant="contained" color="secondary" onClick={handleEndGame}>
+    <Button variant="contained" color="error" onClick={endGame}>
       End Game
     </Button>
   );

@@ -13,9 +13,11 @@ export interface Player {
 interface StoreState {
   inputName: string;
   players: Player[];
+  isEndGame: boolean;
   setInputName: (name: string) => void;
   addPlayers: (names: string[], initialAmount: number) => void;
   updateOwed: (index: number, amount: number) => void;
+  startGame: () => void;
   endGame: () => void;
   usedShowMe: (index: number) => void;
   quitPlayer: (index: number, finalResult: number) => void;
@@ -24,6 +26,7 @@ interface StoreState {
 const initialGameState = {
   inputName: "",
   players: [],
+  isEndGame: false,
 };
 
 export const usePlayerStore = create<StoreState>()(
@@ -62,7 +65,8 @@ export const usePlayerStore = create<StoreState>()(
           newPlayers[index].finalResult = finalResult;
           return { players: newPlayers };
         }),
-      endGame: () => set({ ...initialGameState }),
+      endGame: () => set({ isEndGame: true }),
+      startGame: () => set({ ...initialGameState, isEndGame: false }),
     }),
     { name: "player-storage" }
   )

@@ -5,40 +5,30 @@ import ControlPanel from "./components/ControlPanel/ControlPanel";
 import AddPlayer from "./components/AddPlayer/AddPlayer";
 import EndGame from "./components/EndGame/EndGame";
 import ReadOweListButton from "./components/ReadOweListButton/ReadOweListButton";
-
-// import EndGame from "./components/EndGame/EndGame";
-// import styles from "./App.module.css";
-// import AddPlayer from "./components/AddPlayer/AddPlayer";
-// import PokerTable from "./components/PokerTable/PokerTable";
-// import ReadOweListButton from "./components/ReadOweListButton/ReadOweListButton";
-
-// const App: React.FC = () => {
-//   return (
-//     <div className={styles.container}>
-//       <div className={styles.tableContainer}>
-//         <PokerTable />
-//       </div>
-//       <div className={styles.buttons}>
-//         <AddPlayer />
-//         <ReadOweListButton />
-//         <EndGame />
-//       </div>
-//     </div>
-//   );
-// };
+import EndGameScreen from "./components/EndGame/EndGameScreen";
+import { usePlayerStore } from "./stores";
 
 const App: FC = () => {
+  const { isEndGame, players } = usePlayerStore();
   return (
     <>
       <TopBar />
-      <PlayerTable />
-      <ControlPanel>
-        <AddPlayer />
-      </ControlPanel>
-      <ControlPanel>
-        <EndGame />
-        <ReadOweListButton />
-      </ControlPanel>
+      {!isEndGame ? (
+        <>
+          <PlayerTable />
+          <ControlPanel>
+            <AddPlayer />
+          </ControlPanel>
+          {players?.length > 0 && (
+            <ControlPanel>
+              <EndGame />
+              <ReadOweListButton />
+            </ControlPanel>
+          )}
+        </>
+      ) : (
+        <EndGameScreen />
+      )}
     </>
   );
 };
