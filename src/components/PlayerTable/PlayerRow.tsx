@@ -9,7 +9,7 @@ const PlayerRow: FC<PlayerRowProps> = ({ player, index }) => {
       <TableCell>{player.name}</TableCell>
       <TableCell align="right">{player.owed}</TableCell>
       <TableCell align="right">
-        {player.hasQuit ? player?.finalResult : "-"}
+        {player.hasQuit ? player.finalResult : "-"}
       </TableCell>
       <TableCell align="right">
         <PlayerActions player={player} index={index} />

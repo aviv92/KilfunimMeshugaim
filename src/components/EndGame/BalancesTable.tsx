@@ -8,21 +8,15 @@ import {
   TableBody,
   TextField,
 } from "@mui/material";
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import { usePlayerStore } from "../../stores";
 
-type Props = {
-  finalResults: number[];
-  setFinalResults: Dispatch<SetStateAction<number[]>>;
-};
-
-const BalancesTable: FC<Props> = ({ finalResults, setFinalResults }) => {
-  const { players } = usePlayerStore();
+const BalancesTable: FC = () => {
+  const { players, quitPlayer } = usePlayerStore();
+  const finalResults = players.map((player) => player.finalResult || 0);
 
   const handleFinalResultChange = (index: number, value: number) => {
-    const newFinalResults = [...finalResults];
-    newFinalResults[index] = value;
-    setFinalResults(newFinalResults);
+    quitPlayer(index, value);
   };
 
   const calculateTotalBalance = () =>

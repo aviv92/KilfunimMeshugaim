@@ -10,6 +10,12 @@ export interface Player {
   finalResult?: number;
 }
 
+export interface Payment {
+  from: string;
+  to: string;
+  amount: number;
+}
+
 interface StoreState {
   inputName: string;
   players: Player[];
@@ -21,12 +27,15 @@ interface StoreState {
   endGame: () => void;
   usedShowMe: (index: number) => void;
   quitPlayer: (index: number, finalResult: number) => void;
+  payments: Payment[];
+  setPayments: (newPayments: Payment[]) => void;
 }
 
 const initialGameState = {
   inputName: "",
   players: [],
   isEndGame: false,
+  payments: [],
 };
 
 export const usePlayerStore = create<StoreState>()(
@@ -65,6 +74,7 @@ export const usePlayerStore = create<StoreState>()(
           newPlayers[index].finalResult = finalResult;
           return { players: newPlayers };
         }),
+      setPayments: (newPayments) => set({ payments: newPayments }),
       endGame: () => set({ isEndGame: true }),
       startGame: () => set({ ...initialGameState, isEndGame: false }),
     }),

@@ -1,22 +1,13 @@
 import { Button } from "@mui/material";
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import ControlPanel from "../ControlPanel/ControlPanel";
 import { calculatePayments } from "./utils/utils";
 import { usePlayerStore } from "../../stores";
-import { Payment } from "./utils/types";
 
-type Props = {
-  setPayments: Dispatch<SetStateAction<Payment[]>>;
-  finalResults: number[];
-  isPaymentsCalculated: boolean;
-};
-
-const ActionsBar: FC<Props> = ({
-  finalResults,
-  isPaymentsCalculated,
-  setPayments,
-}) => {
-  const { players, startGame } = usePlayerStore();
+const ActionsBar: FC = () => {
+  const { players, startGame, payments, setPayments } = usePlayerStore();
+  const finalResults = players.map((player) => player.finalResult || 0);
+  const isPaymentsCalculated = payments.length > 0;
   return (
     <ControlPanel>
       {!isPaymentsCalculated && (
