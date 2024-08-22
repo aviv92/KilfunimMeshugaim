@@ -1,5 +1,5 @@
-import { Player } from "../../../stores/usePlayerStore";
-import { PlayerBalance, Payment } from "./types";
+import { Payment, Player } from "../../../stores/usePlayerStore";
+import { PlayerBalance } from "./types";
 
 export const calculatePayments = (
   players: Player[],
