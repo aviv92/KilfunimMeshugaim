@@ -8,6 +8,7 @@ export interface Player {
   showMe: boolean;
   hasQuit: boolean;
   finalResult?: number;
+  id: string;
 }
 
 export interface Payment {
@@ -22,11 +23,11 @@ interface StoreState {
   isEndGame: boolean;
   setInputName: (name: string) => void;
   addPlayers: (names: string[], initialAmount: number) => void;
-  updateOwed: (index: number, amount: number) => void;
+  updateOwed: (id: string, amount: number) => void;
   startGame: () => void;
   endGame: () => void;
-  usedShowMe: (index: number) => void;
-  quitPlayer: (index: number, finalResult: number) => void;
+  usedShowMe: (id: string) => void;
+  quitPlayer: (id: string, finalResult: number) => void;
   payments: Payment[];
   setPayments: (newPayments: Payment[]) => void;
 }
@@ -36,6 +37,10 @@ const initialGameState = {
   players: [],
   isEndGame: false,
   payments: [],
+};
+
+export const generateId = () => {
+  return crypto.randomUUID();
 };
 
 export const usePlayerStore = create<StoreState>()(
@@ -52,26 +57,35 @@ export const usePlayerStore = create<StoreState>()(
               owed: initialAmount,
               showMe: true,
               hasQuit: false,
+              id: generateId(),
             })),
           ],
         })),
-      updateOwed: (index, amount) =>
+      updateOwed: (id, amount) =>
         set((state) => {
-          const newPlayers = state.players;
-          newPlayers[index].owed += amount;
+          const newPlayers = state.players.map((player) => {
+            if (player.id !== id) return player;
+            return { ...player, owed: player.owed + amount };
+          });
+
           return { players: newPlayers };
         }),
-      usedShowMe: (index) =>
+      usedShowMe: (id) =>
         set((state) => {
-          const newPlayers = [...state.players];
-          newPlayers[index].showMe = false;
+          const newPlayers = state.players.map((player) => {
+            if (player.id !== id) return player;
+            return { ...player, showMe: false };
+          });
+
           return { players: newPlayers };
         }),
-      quitPlayer: (index, finalResult) =>
+      quitPlayer: (id, finalResult) =>
         set((state) => {
-          const newPlayers = [...state.players];
-          newPlayers[index].hasQuit = true;
-          newPlayers[index].finalResult = finalResult;
+          const newPlayers = state.players.map((player) => {
+            if (player.id !== id) return player;
+            return { ...player, hasQuit: true, finalResult };
+          });
+
           return { players: newPlayers };
         }),
       setPayments: (newPayments) => set({ payments: newPayments }),

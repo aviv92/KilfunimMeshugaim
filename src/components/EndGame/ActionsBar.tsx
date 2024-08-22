@@ -28,11 +28,9 @@ const ActionsBar: FC = () => {
           Reset payments
         </Button>
       )}
-      {isPaymentsCalculated && (
-        <Button variant="contained" color="primary" onClick={startGame}>
-          Start New Game
-        </Button>
-      )}
+      <Button variant="contained" color="primary" onClick={startGame}>
+        Start New Game
+      </Button>
     </ControlPanel>
   );
 };

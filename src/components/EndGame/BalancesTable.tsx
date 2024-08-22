@@ -15,8 +15,9 @@ const BalancesTable: FC = () => {
   const { players, quitPlayer } = usePlayerStore();
   const finalResults = players.map((player) => player.finalResult || 0);
 
-  const handleFinalResultChange = (index: number, value: number) => {
-    quitPlayer(index, value);
+  const handleFinalResultChange = (id: string, value: number) => {
+    console.log(id, value);
+    quitPlayer(id, value);
   };
 
   const calculateTotalBalance = () =>
@@ -39,7 +40,7 @@ const BalancesTable: FC = () => {
         </TableHead>
         <TableBody>
           {players.map((player, index) => (
-            <TableRow key={player.name}>
+            <TableRow key={player.id}>
               <TableCell component="th" scope="row">
                 {player.name}
               </TableCell>
@@ -49,7 +50,10 @@ const BalancesTable: FC = () => {
                   type="number"
                   value={finalResults[index]}
                   onChange={(e) =>
-                    handleFinalResultChange(index, parseFloat(e.target.value))
+                    handleFinalResultChange(
+                      player.id,
+                      parseFloat(e.target.value)
+                    )
                   }
                   variant="outlined"
                   size="small"

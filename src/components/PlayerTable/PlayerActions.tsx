@@ -9,42 +9,42 @@ import { IconButton } from "@mui/material";
 import { usePlayerStore, useSettingsStore } from "../../stores";
 import { PlayerRowProps } from "./types";
 
-const PlayerActions: FC<PlayerRowProps> = ({ index, player }) => {
+const PlayerActions: FC<PlayerRowProps> = ({ player }) => {
   const { updateOwed, usedShowMe, quitPlayer } = usePlayerStore();
   const { defaultRebuy } = useSettingsStore();
 
-  const handleQuitPlayer = (index: number) => {
+  const handleQuitPlayer = () => {
     const finalResult = prompt("Enter final amount");
     if (finalResult !== null) {
-      quitPlayer(index, parseFloat(finalResult));
+      quitPlayer(player.id, parseFloat(finalResult));
     }
   };
   return (
     <>
       <IconButton
         color="primary"
-        onClick={() => updateOwed(index, defaultRebuy)}
+        onClick={() => updateOwed(player.id, defaultRebuy)}
         disabled={player.hasQuit}
       >
         <AddIcon />
       </IconButton>
       <IconButton
         color={player.showMe ? "secondary" : "default"}
-        onClick={() => usedShowMe(index)}
+        onClick={() => usedShowMe(player.id)}
         disabled={!player.showMe || player.hasQuit}
       >
         {player.showMe ? <VisibilityIcon /> : <VisibilityOffIcon />}
       </IconButton>
       <IconButton
         color="secondary"
-        onClick={() => updateOwed(index, defaultRebuy * -1)}
+        onClick={() => updateOwed(player.id, defaultRebuy * -1)}
         disabled={player.hasQuit || player.owed === defaultRebuy}
       >
         <RemoveIcon />
       </IconButton>
       <IconButton
         color="error"
-        onClick={() => handleQuitPlayer(index)}
+        onClick={() => handleQuitPlayer()}
         disabled={player.hasQuit}
       >
         <ExitToAppIcon />
