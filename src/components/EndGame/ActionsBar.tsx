@@ -21,7 +21,7 @@ const ActionsBar: FC = () => {
       )}
       {isPaymentsCalculated && (
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
           onClick={() => setPayments([])}
         >

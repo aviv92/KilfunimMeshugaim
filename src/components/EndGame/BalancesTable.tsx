@@ -28,7 +28,7 @@ const BalancesTable: FC = () => {
       .reduce((sum, player) => sum + player.balance, 0);
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Player Name</TableCell>
