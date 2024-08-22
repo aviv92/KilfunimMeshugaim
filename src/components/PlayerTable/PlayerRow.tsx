@@ -11,7 +11,7 @@ const PlayerRow: FC<PlayerRowProps> = ({ player, index }) => {
         <Stack direction="row" gap={2}>
           <Avatar
             alt="Random fish"
-            src={`public/assets/${fishMapper[index]}.png`}
+            src={`../../../public/assets/${fishMapper[index]}.png`}
           />{" "}
           <div style={{ display: "flex", alignItems: "center" }}>
             {player.name}
