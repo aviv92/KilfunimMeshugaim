@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { usePlayerStore } from "../../stores";
+import { usePlayerStore } from "../../../../stores";
 import {
   Table,
   TableBody,

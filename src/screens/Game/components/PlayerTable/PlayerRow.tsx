@@ -1,15 +1,18 @@
 import { TableRow, TableCell, Avatar, Stack } from "@mui/material";
 import { FC } from "react";
-import { PlayerRowProps } from "./types";
+import { PlayerRowProps } from "./utils/types";
 import PlayerActions from "./PlayerActions";
-import { fishMapper } from "./fish-mapper";
+import { fishMapper } from "./utils/fish-mapper";
 
 const PlayerRow: FC<PlayerRowProps> = ({ player, index }) => {
   return (
     <TableRow key={player.id}>
       <TableCell>
         <Stack direction="row" gap={2}>
-          <Avatar alt="Random fish" src={`assets/${fishMapper[index]}.png`} />{" "}
+          <Avatar
+            alt="Random fish"
+            src={`assets/${fishMapper[index % fishMapper.length]}.png`}
+          />{" "}
           <div style={{ display: "flex", alignItems: "center" }}>
             {player.name}
           </div>

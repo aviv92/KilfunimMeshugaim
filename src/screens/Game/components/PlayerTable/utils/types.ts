@@ -1,4 +1,4 @@
-import { Player } from "../../stores/usePlayerStore";
+import { Player } from "../../../../../stores/usePlayerStore";
 
 export type PlayerRowProps = {
   player: Player;

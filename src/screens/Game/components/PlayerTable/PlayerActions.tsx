@@ -6,8 +6,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { IconButton } from "@mui/material";
-import { usePlayerStore, useSettingsStore } from "../../stores";
-import { PlayerRowProps } from "./types";
+import { usePlayerStore, useSettingsStore } from "../../../../stores";
+import { PlayerRowProps } from "./utils/types";
 
 const PlayerActions: FC<PlayerRowProps> = ({ player }) => {
   const { updateOwed, usedShowMe, quitPlayer } = usePlayerStore();

@@ -1,10 +1,10 @@
 import React from "react";
-import BalancesTable from "./BalancesTable";
-import PaymentSummary from "./PaymentSummary";
-import ActionsBar from "./ActionsBar";
+import BalancesTable from "./components/BalancesTable/BalancesTable";
+import PaymentSummary from "./components/PaymentSummary/PaymentSummary";
+import ActionsBar from "./components/ActionsBar/ActionsBar";
 import { usePlayerStore } from "../../stores/usePlayerStore";
 
-const EndGameScreen: React.FC = () => {
+const EndGame: React.FC = () => {
   const { payments } = usePlayerStore();
 
   return (
@@ -15,4 +15,4 @@ const EndGameScreen: React.FC = () => {
   );
 };
 
-export default EndGameScreen;
+export default EndGame;

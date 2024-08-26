@@ -9,14 +9,13 @@ import {
   TextField,
 } from "@mui/material";
 import { FC } from "react";
-import { usePlayerStore } from "../../stores";
+import { usePlayerStore } from "../../../../stores";
 
 const BalancesTable: FC = () => {
   const { players, quitPlayer } = usePlayerStore();
   const finalResults = players.map((player) => player.finalResult || 0);
 
   const handleFinalResultChange = (id: string, value: number) => {
-    console.log(id, value);
     quitPlayer(id, value);
   };
 

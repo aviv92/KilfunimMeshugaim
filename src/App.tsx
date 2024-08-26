@@ -1,34 +1,15 @@
 import { FC } from "react";
 import TopBar from "./layout/TopBar";
-import PlayerTable from "./components/PlayerTable/PlayerTable";
-import ControlPanel from "./layout/ControlPanel/ControlPanel";
-import AddPlayer from "./components/AddPlayer/AddPlayer";
-import EndGame from "./components/EndGame/EndGame";
-import ReadOweListButton from "./components/ReadOweListButton/ReadOweListButton";
-import EndGameScreen from "./components/EndGame/EndGameScreen";
+import EndGame from "./screens/EndGame/EndGame";
 import { usePlayerStore } from "./stores";
+import Game from "./screens/Game/Game";
 
 const App: FC = () => {
-  const { isEndGame, players } = usePlayerStore();
+  const { isEndGame } = usePlayerStore();
   return (
     <>
       <TopBar />
-      {!isEndGame ? (
-        <>
-          <PlayerTable />
-          <ControlPanel>
-            <AddPlayer />
-          </ControlPanel>
-          {players?.length > 0 && (
-            <ControlPanel>
-              <EndGame />
-              <ReadOweListButton />
-            </ControlPanel>
-          )}
-        </>
-      ) : (
-        <EndGameScreen />
-      )}
+      {!isEndGame ? <Game /> : <EndGame />}
     </>
   );
 };

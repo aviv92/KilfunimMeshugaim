@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 import { FC } from "react";
-import ControlPanel from "../../layout/ControlPanel/ControlPanel";
-import { calculatePayments } from "./utils/utils";
-import { usePlayerStore } from "../../stores";
+import ControlPanel from "../../../../layout/ControlPanel/ControlPanel";
+import { calculatePayments } from "../../utils/utils";
+import { usePlayerStore } from "../../../../stores";
 
 const ActionsBar: FC = () => {
   const { players, startGame, payments, setPayments } = usePlayerStore();
