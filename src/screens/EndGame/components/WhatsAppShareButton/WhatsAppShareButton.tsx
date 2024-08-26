@@ -6,17 +6,10 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 const WhatsAppShareButton: FC = () => {
   const { payments } = usePlayerStore();
 
-  const generateWhatsAppMessage = () => {
-    const header = "Payment Instructions:";
-    const body = payments
-      .map(
-        (payment) =>
-          `${payment.from} should pay ${payment.to} ${payment.amount} shekels`
-      )
+  const generateWhatsAppMessage = () =>
+    payments
+      .map((payment) => `${payment.from} ==> ${payment.to} ${payment.amount}`)
       .join("\n");
-
-    return `${header}\n\n${body}`;
-  };
 
   const shareOnWhatsApp = () => {
     const message = encodeURIComponent(generateWhatsAppMessage());
