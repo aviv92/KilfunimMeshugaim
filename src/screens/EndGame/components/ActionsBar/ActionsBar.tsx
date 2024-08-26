@@ -17,7 +17,7 @@ const ActionsBar: FC = () => {
           color="primary"
           onClick={() => setPayments(calculatePayments(players, finalResults))}
         >
-          Calculate Balances
+          Calculate payments
         </Button>
       )}
       {isPaymentsCalculated && (
@@ -26,12 +26,12 @@ const ActionsBar: FC = () => {
           color="primary"
           onClick={() => setPayments([])}
         >
-          Reset payments
+          Back
         </Button>
       )}
       {isPaymentsCalculated && <WhatsAppShareButton />}
       <Button variant="contained" color="primary" onClick={startGame}>
-        Start New Game
+        New Game
       </Button>
     </ControlPanel>
   );

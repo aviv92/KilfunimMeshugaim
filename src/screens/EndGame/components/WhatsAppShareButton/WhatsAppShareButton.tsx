@@ -18,7 +18,7 @@ const WhatsAppShareButton: FC = () => {
   };
 
   return (
-    <IconButton color="info" onClick={shareOnWhatsApp}>
+    <IconButton sx={{ color: "#25d366" }} onClick={shareOnWhatsApp}>
       <WhatsAppIcon />
     </IconButton>
   );
