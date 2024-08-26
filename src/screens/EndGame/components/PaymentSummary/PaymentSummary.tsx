@@ -23,8 +23,7 @@ const PaymentSummary: FC = () => {
               <React.Fragment key={index}>
                 <ListItem>
                   <ListItemText
-                    primary={`${payment.from} should pay ${payment.to}`}
-                    secondary={`Amount: ${payment.amount} shekels`}
+                    primary={`${payment.from} ==> ${payment.to} | ${payment.amount}`}
                   />
                 </ListItem>
                 {index < payments.length - 1 && <Divider />}

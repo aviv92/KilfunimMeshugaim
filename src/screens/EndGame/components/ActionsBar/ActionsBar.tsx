@@ -11,28 +11,30 @@ const ActionsBar: FC = () => {
   const isPaymentsCalculated = payments.length > 0;
   return (
     <ControlPanel>
+      {isPaymentsCalculated && (
+        <>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => setPayments([])}
+          >
+            Back
+          </Button>
+          <WhatsAppShareButton />
+          <Button variant="contained" color="primary" onClick={startGame}>
+            New Game
+          </Button>
+        </>
+      )}
       {!isPaymentsCalculated && (
         <Button
           variant="contained"
           color="primary"
           onClick={() => setPayments(calculatePayments(players, finalResults))}
         >
-          Calculate payments
+          Next
         </Button>
       )}
-      {isPaymentsCalculated && (
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => setPayments([])}
-        >
-          Back
-        </Button>
-      )}
-      {isPaymentsCalculated && <WhatsAppShareButton />}
-      <Button variant="contained" color="primary" onClick={startGame}>
-        New Game
-      </Button>
     </ControlPanel>
   );
 };
