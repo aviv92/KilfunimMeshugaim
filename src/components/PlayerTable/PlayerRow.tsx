@@ -9,10 +9,7 @@ const PlayerRow: FC<PlayerRowProps> = ({ player, index }) => {
     <TableRow key={player.id}>
       <TableCell>
         <Stack direction="row" gap={2}>
-          <Avatar
-            alt="Random fish"
-            src={`public/assets/${fishMapper[index]}.png`}
-          />{" "}
+          <Avatar alt="Random fish" src={`/assets/airship_8315199.png`} />{" "}
           <div style={{ display: "flex", alignItems: "center" }}>
             {player.name}
           </div>

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { FC } from "react";
-import ControlPanel from "../ControlPanel/ControlPanel";
+import ControlPanel from "../../layout/ControlPanel/ControlPanel";
 import { usePlayerStore } from "../../stores/usePlayerStore";
 
 const PaymentSummary: FC = () => {

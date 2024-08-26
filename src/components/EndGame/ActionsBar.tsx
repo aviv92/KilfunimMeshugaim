@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { FC } from "react";
-import ControlPanel from "../ControlPanel/ControlPanel";
+import ControlPanel from "../../layout/ControlPanel/ControlPanel";
 import { calculatePayments } from "./utils/utils";
 import { usePlayerStore } from "../../stores";
 

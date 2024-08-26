@@ -1,7 +1,7 @@
 import { FC } from "react";
 import TopBar from "./layout/TopBar";
 import PlayerTable from "./components/PlayerTable/PlayerTable";
-import ControlPanel from "./components/ControlPanel/ControlPanel";
+import ControlPanel from "./layout/ControlPanel/ControlPanel";
 import AddPlayer from "./components/AddPlayer/AddPlayer";
 import EndGame from "./components/EndGame/EndGame";
 import ReadOweListButton from "./components/ReadOweListButton/ReadOweListButton";
