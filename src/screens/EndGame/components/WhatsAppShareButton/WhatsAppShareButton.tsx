@@ -2,12 +2,13 @@ import { FC } from "react";
 import { IconButton } from "@mui/material";
 import { usePlayerStore } from "../../../../stores/usePlayerStore";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { calculateNetPayments } from "./utils";
 
 const WhatsAppShareButton: FC = () => {
-  const { payments } = usePlayerStore();
+  const { payments, foodOrders } = usePlayerStore();
 
   const generateWhatsAppMessage = () =>
-    payments
+    calculateNetPayments(payments, foodOrders)
       .map((payment) => `${payment.from} ==> ${payment.to} ${payment.amount}`)
       .join("\n");
 

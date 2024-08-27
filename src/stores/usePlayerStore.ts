@@ -17,6 +17,13 @@ export interface Payment {
   amount: number;
 }
 
+export interface FoodOrder {
+  payer: string;
+  participants: string[];
+  foodCosts: { [key: string]: number };
+  tip: number;
+}
+
 interface StoreState {
   inputName: string;
   players: Player[];
@@ -30,6 +37,8 @@ interface StoreState {
   quitPlayer: (id: string, finalResult: number) => void;
   payments: Payment[];
   setPayments: (newPayments: Payment[]) => void;
+  foodOrders: FoodOrder[];
+  addFoodOrder: (order: FoodOrder) => void;
 }
 
 const initialGameState = {
@@ -37,6 +46,7 @@ const initialGameState = {
   players: [],
   isEndGame: false,
   payments: [],
+  foodOrders: [],
 };
 
 export const generateId = () => {
@@ -91,6 +101,11 @@ export const usePlayerStore = create<StoreState>()(
       setPayments: (newPayments) => set({ payments: newPayments }),
       endGame: () => set({ isEndGame: true }),
       startGame: () => set({ ...initialGameState, isEndGame: false }),
+      addFoodOrder: (order) =>
+        set((state) => ({
+          ...state,
+          foodOrders: [...state.foodOrders, order],
+        })),
     }),
     { name: "player-storage" }
   )
