@@ -2,7 +2,6 @@ import { FC } from "react";
 import { usePlayerStore, DEFAULT_REBUY } from "../../../../stores";
 import { TextField, Button, Box } from "@mui/material";
 import { cleanAndSplitNames } from "./utils/utils";
-import { isReadOnlyMode } from "../../../../utils/serializeState";
 
 const AddPlayer: FC = () => {
   const { inputName, setInputName, addPlayers } = usePlayerStore();
@@ -15,7 +14,6 @@ const AddPlayer: FC = () => {
     }
   };
 
-  const readOnly = isReadOnlyMode();
   return (
     <Box display="flex" gap="10px">
       <TextField
@@ -26,12 +24,7 @@ const AddPlayer: FC = () => {
         onChange={(e) => setInputName(e.target.value)}
         placeholder="Use commas to separate names"
       />
-      <Button
-        disabled={readOnly}
-        variant="contained"
-        color="primary"
-        onClick={handleAddPlayer}
-      >
+      <Button variant="contained" color="primary" onClick={handleAddPlayer}>
         Add
       </Button>
     </Box>
