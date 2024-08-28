@@ -6,12 +6,11 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { IconButton } from "@mui/material";
-import { usePlayerStore, useSettingsStore } from "../../../../stores";
+import { DEFAULT_REBUY, usePlayerStore } from "../../../../stores";
 import { PlayerRowProps } from "./utils/types";
 
 const PlayerActions: FC<PlayerRowProps> = ({ player }) => {
   const { updateOwed, usedShowMe, quitPlayer } = usePlayerStore();
-  const { defaultRebuy } = useSettingsStore();
 
   const handleQuitPlayer = () => {
     const finalResult = prompt("Enter final amount");
@@ -23,7 +22,7 @@ const PlayerActions: FC<PlayerRowProps> = ({ player }) => {
     <>
       <IconButton
         color="primary"
-        onClick={() => updateOwed(player.id, defaultRebuy)}
+        onClick={() => updateOwed(player.id, DEFAULT_REBUY)}
         disabled={player.hasQuit}
       >
         <AddIcon />
@@ -37,8 +36,8 @@ const PlayerActions: FC<PlayerRowProps> = ({ player }) => {
       </IconButton>
       <IconButton
         color="secondary"
-        onClick={() => updateOwed(player.id, defaultRebuy * -1)}
-        disabled={player.hasQuit || player.owed === defaultRebuy}
+        onClick={() => updateOwed(player.id, DEFAULT_REBUY * -1)}
+        disabled={player.hasQuit || player.owed === DEFAULT_REBUY}
       >
         <RemoveIcon />
       </IconButton>

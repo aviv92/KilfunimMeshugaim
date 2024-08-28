@@ -2,29 +2,29 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export interface Player {
+export type Player = {
   name: string;
   owed: number;
   showMe: boolean;
   hasQuit: boolean;
   finalResult?: number;
   id: string;
-}
+};
 
-export interface Payment {
+export type Payment = {
   from: string;
   to: string;
   amount: number;
-}
+};
 
-export interface FoodOrder {
+export type FoodOrder = {
   payer: string;
   participants: string[];
   foodCosts: { [key: string]: number };
   tip: number;
-}
+};
 
-interface StoreState {
+type StoreState = {
   inputName: string;
   players: Player[];
   isEndGame: boolean;
@@ -39,7 +39,7 @@ interface StoreState {
   setPayments: (newPayments: Payment[]) => void;
   foodOrders: FoodOrder[];
   addFoodOrder: (order: FoodOrder) => void;
-}
+};
 
 const initialGameState = {
   inputName: "",
@@ -48,6 +48,8 @@ const initialGameState = {
   payments: [],
   foodOrders: [],
 };
+
+export const DEFAULT_REBUY = 50;
 
 export const generateId = () => {
   return crypto.randomUUID();

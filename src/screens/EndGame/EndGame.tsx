@@ -1,10 +1,10 @@
-import React from "react";
+import { FC } from "react";
 import BalancesTable from "./components/BalancesTable/BalancesTable";
 import PaymentSummary from "./components/PaymentSummary/PaymentSummary";
 import ActionsBar from "./components/ActionsBar/ActionsBar";
 import { usePlayerStore } from "../../stores/usePlayerStore";
 
-const EndGame: React.FC = () => {
+const EndGame: FC = () => {
   const { payments } = usePlayerStore();
 
   return (

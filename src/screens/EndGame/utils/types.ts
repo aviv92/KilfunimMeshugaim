@@ -1,4 +1,4 @@
-export interface PlayerBalance {
+export type PlayerBalance = {
   name: string;
   balance: number;
-}
+};

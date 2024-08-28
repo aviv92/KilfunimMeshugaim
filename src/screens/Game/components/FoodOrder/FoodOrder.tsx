@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import {
   Button,
   Dialog,
@@ -13,10 +13,11 @@ import {
   Box,
   Typography,
   Divider,
+  FormHelperText,
 } from "@mui/material";
 import { usePlayerStore, FoodOrder } from "../../../../stores/usePlayerStore";
 
-const FoodOrderModal: React.FC = () => {
+const FoodOrderModal: FC = () => {
   const { players, addFoodOrder, foodOrders } = usePlayerStore();
   const [open, setOpen] = useState(false);
   const [showForm, setShowForm] = useState<boolean[]>([]);
@@ -78,7 +79,7 @@ const FoodOrderModal: React.FC = () => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
         Food Orders
       </Button>
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
@@ -133,6 +134,9 @@ const FoodOrderModal: React.FC = () => {
                         </MenuItem>
                       ))}
                     </Select>
+                    <FormHelperText id="my-helper-text">
+                      No need to select the payer.
+                    </FormHelperText>
                   </FormControl>
 
                   {order.participants.map((participant) => (
@@ -182,11 +186,10 @@ const FoodOrderModal: React.FC = () => {
                     {order.participants.map((participant) => (
                       <div key={participant}>
                         {participant}:{" "}
-                        {calculateParticipantShare(order, participant)} shekels
+                        {calculateParticipantShare(order, participant)}
                       </div>
                     ))}
                   </Typography>
-                  <Typography>Tip: {order.tip} shekels</Typography>
                 </Box>
               )}
               <Divider style={{ margin: "20px 0" }} />

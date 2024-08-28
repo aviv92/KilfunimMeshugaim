@@ -1,2 +1,1 @@
-export { usePlayerStore } from "./usePlayerStore";
-export { useSettingsStore } from "./useSettingsStore";
+export * from "./usePlayerStore";

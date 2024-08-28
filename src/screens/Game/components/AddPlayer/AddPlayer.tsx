@@ -1,16 +1,15 @@
-import React from "react";
-import { usePlayerStore, useSettingsStore } from "../../../../stores";
+import { FC } from "react";
+import { usePlayerStore, DEFAULT_REBUY } from "../../../../stores";
 import { TextField, Button, Box } from "@mui/material";
 import { cleanAndSplitNames } from "./utils/utils";
 
-const AddPlayer: React.FC = () => {
+const AddPlayer: FC = () => {
   const { inputName, setInputName, addPlayers } = usePlayerStore();
-  const { defaultRebuy } = useSettingsStore();
 
   const handleAddPlayer = () => {
     if (inputName.trim()) {
       const playerNames = cleanAndSplitNames(inputName);
-      addPlayers(playerNames, defaultRebuy);
+      addPlayers(playerNames, DEFAULT_REBUY);
       setInputName("");
     }
   };

@@ -12,13 +12,13 @@ const Game: FC = () => {
     <>
       <PlayerTable />
       <ControlPanel>
+        <AddPlayer />
         {players?.length > 0 && (
           <>
-            <EndGame />
             <FoodOrder />
+            <EndGame />
           </>
         )}
-        <AddPlayer />
       </ControlPanel>
     </>
   );

@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 import { usePlayerStore } from "../../../../stores";
 import { Button } from "@mui/material";
 
-const EndGameButton: React.FC = () => {
+const EndGameButton: FC = () => {
   const { endGame } = usePlayerStore();
 
   return (

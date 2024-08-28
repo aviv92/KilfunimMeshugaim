@@ -1,11 +1,11 @@
-import React from "react";
+import { FC, ReactNode } from "react";
 import { Container } from "@mui/material";
 
-interface ControlPanelProps {
-  children: React.ReactNode;
-}
+type ControlPanelProps = {
+  children: ReactNode;
+};
 
-const ControlPanel: React.FC<ControlPanelProps> = ({ children }) => {
+const ControlPanel: FC<ControlPanelProps> = ({ children }) => {
   return (
     <Container
       maxWidth="md"
