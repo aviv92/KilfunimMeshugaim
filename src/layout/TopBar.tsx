@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Menu, MenuItem } from "@mui/material";
+import { generateShareableLink } from "../utils/serializeState";
 
 const ButtonAppBar: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -16,6 +17,13 @@ const ButtonAppBar: FC = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleShare = () => {
+    const shareableLink = generateShareableLink();
+    navigator.clipboard.writeText(shareableLink);
+    alert("Shareable link copied to clipboard!");
+    handleClose();
   };
 
   return (
@@ -47,7 +55,7 @@ const ButtonAppBar: FC = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Settings</MenuItem>
+            <MenuItem onClick={handleShare}>Share game</MenuItem>
           </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             קלפונים משוגעים

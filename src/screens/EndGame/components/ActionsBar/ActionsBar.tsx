@@ -4,11 +4,14 @@ import ControlPanel from "../../../../layout/ControlPanel/ControlPanel";
 import { calculatePayments } from "../../utils/utils";
 import { usePlayerStore } from "../../../../stores";
 import WhatsAppShareButton from "../WhatsAppShareButton/WhatsAppShareButton";
+import { isReadOnlyMode } from "../../../../utils/serializeState";
 
 const ActionsBar: FC = () => {
   const { players, startGame, payments, setPayments } = usePlayerStore();
   const finalResults = players.map((player) => player.finalResult || 0);
   const isPaymentsCalculated = payments.length > 0;
+
+  const readOnly = isReadOnlyMode();
   return (
     <ControlPanel>
       {isPaymentsCalculated && (
@@ -17,17 +20,24 @@ const ActionsBar: FC = () => {
             variant="outlined"
             color="primary"
             onClick={() => setPayments([])}
+            disabled={readOnly}
           >
             Back
           </Button>
           <WhatsAppShareButton />
-          <Button variant="contained" color="primary" onClick={startGame}>
+          <Button
+            disabled={readOnly}
+            variant="contained"
+            color="primary"
+            onClick={startGame}
+          >
             New Game
           </Button>
         </>
       )}
       {!isPaymentsCalculated && (
         <Button
+          disabled={readOnly}
           variant="contained"
           color="primary"
           onClick={() => setPayments(calculatePayments(players, finalResults))}
