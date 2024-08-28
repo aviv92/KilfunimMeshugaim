@@ -18,7 +18,7 @@ export const deserializeState = (serializedState: string) => {
 export const generateShareableLink = (): string => {
   const serializedState = serializeState();
   const baseUrl = window.location.origin;
-  return `${baseUrl}/?data=${serializedState}`;
+  return `${baseUrl}/KilfunimMeshugaim/?data=${serializedState}`;
 };
 
 export const isReadOnlyMode = (): boolean => {
