@@ -1,4 +1,3 @@
-// src/store.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -39,6 +38,7 @@ type StoreState = {
   setPayments: (newPayments: Payment[]) => void;
   foodOrders: FoodOrder[];
   addFoodOrder: (order: FoodOrder) => void;
+  setFullState: (state: Partial<StoreState>) => void;
 };
 
 const initialGameState = {
@@ -108,6 +108,7 @@ export const usePlayerStore = create<StoreState>()(
           ...state,
           foodOrders: [...state.foodOrders, order],
         })),
+      setFullState: (newState) => set((prev) => ({ ...prev, ...newState })),
     }),
     { name: "player-storage" }
   )

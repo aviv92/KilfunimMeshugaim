@@ -4,9 +4,10 @@ import ControlPanel from "../../../../layout/ControlPanel/ControlPanel";
 import { calculatePayments } from "../../utils/utils";
 import { usePlayerStore } from "../../../../stores";
 import WhatsAppShareButton from "../WhatsAppShareButton/WhatsAppShareButton";
+import NewGameButton from "../NewGameButton/NewGameButton";
 
 const ActionsBar: FC = () => {
-  const { players, startGame, payments, setPayments } = usePlayerStore();
+  const { players, payments, setPayments } = usePlayerStore();
   const finalResults = players.map((player) => player.finalResult || 0);
   const isPaymentsCalculated = payments.length > 0;
 
@@ -22,9 +23,7 @@ const ActionsBar: FC = () => {
             Back
           </Button>
           <WhatsAppShareButton />
-          <Button variant="contained" color="primary" onClick={startGame}>
-            New Game
-          </Button>
+          <NewGameButton />
         </>
       )}
       {!isPaymentsCalculated && (

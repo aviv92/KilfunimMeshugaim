@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Menu, MenuItem } from "@mui/material";
+import { shareGame } from "./utils/shareGame";
+import NewGameButton from "../../screens/EndGame/components/NewGameButton/NewGameButton";
 
 const ButtonAppBar: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -48,6 +50,25 @@ const ButtonAppBar: FC = () => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>Close</MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                shareGame(false);
+              }}
+            >
+              Share game
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                shareGame();
+              }}
+            >
+              Share game (read only)
+            </MenuItem>
+            <MenuItem>
+              <NewGameButton />
+            </MenuItem>
           </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             קלפונים משוגעים
