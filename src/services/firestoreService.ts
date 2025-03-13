@@ -1,4 +1,3 @@
-// src/services/firestoreService.ts
 import { db } from "../firebase";
 import { doc, setDoc, getDoc, onSnapshot } from "firebase/firestore";
 import { Player, Payment, FoodOrder } from "../stores/usePlayerStore";

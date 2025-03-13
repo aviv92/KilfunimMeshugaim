@@ -1,4 +1,3 @@
-// src/hooks/useFirestoreSync.ts
 import { useEffect } from "react";
 import { usePlayerStore } from "../stores";
 import {
@@ -14,24 +13,28 @@ export const useFirestoreSync = (
   const state = usePlayerStore();
   const { setFullState } = state;
 
-  // 🔁 Listen to remote updates
+  // 🔁 Listen for Firestore changes → update Zustand
   useEffect(() => {
     const unsubscribe = subscribeToGameState(
       gameId,
       (remoteState: GameState) => {
+        console.log("[Firestore Sync] Received update:", remoteState);
         setFullState(remoteState);
       }
     );
-    return () => unsubscribe();
-  }, [gameId, setFullState]);
 
-  // 🔁 Sync local Zustand to Firestore on any state change
+    return () => unsubscribe();
+  }, [gameId]);
+
+  // 🔁 Sync Zustand → Firestore on state change
   useEffect(() => {
     if (isReadOnly) return;
 
-    const unsub = usePlayerStore.subscribe((currentState) => {
-      const { players, payments, foodOrders } = currentState;
-      saveGameState(gameId, { players, payments, foodOrders });
+    const unsub = usePlayerStore.subscribe((state) => {
+      const { players, payments, foodOrders } = state;
+      const stateToSync: GameState = { players, payments, foodOrders };
+      console.log("[Firestore Sync] Saving state:", stateToSync);
+      saveGameState(gameId, stateToSync);
     });
 
     return () => unsub();

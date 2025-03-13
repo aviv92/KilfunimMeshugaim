@@ -9,7 +9,7 @@ const NewGameButton: FC = () => {
   const handleCreateNewGame = () => {
     const newGameId = uuidv4().slice(0, 8);
     startGame();
-    window.location.replace(`/?gameId=${newGameId}`);
+    window.location.replace(`/KilfunimMeshugaim/?gameId=${newGameId}`);
   };
 
   return (
