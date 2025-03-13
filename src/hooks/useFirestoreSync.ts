@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePlayerStore } from "../stores";
 import {
   subscribeToGameState,
   saveGameState,
+  getGameState,
 } from "../services/firestoreService";
 import { GameState } from "../services/firestoreService";
 
@@ -11,32 +12,46 @@ export const useFirestoreSync = (
   isReadOnly: boolean = false
 ) => {
   const state = usePlayerStore();
-  const { setFullState } = state;
+  const { setFullState, players, payments, foodOrders } = state;
 
-  // 🔁 Listen for Firestore changes → update Zustand
+  const previousStateRef = useRef<string>(""); // serialized state cache
+  const isInitializedRef = useRef(false); // guard for initial sync
+
+  // First: Load initial state from Firestore
   useEffect(() => {
-    const unsubscribe = subscribeToGameState(
-      gameId,
-      (remoteState: GameState) => {
-        console.log("[Firestore Sync] Received update:", remoteState);
-        setFullState(remoteState);
+    const init = async () => {
+      const remote = await getGameState(gameId);
+      if (remote) {
+        setFullState(remote);
       }
-    );
+      isInitializedRef.current = true;
+    };
+    init();
+  }, [gameId, setFullState]);
 
-    return () => unsubscribe();
-  }, [gameId]);
-
-  // 🔁 Sync Zustand → Firestore on state change
+  // Second: Subscribe to remote Firestore updates
   useEffect(() => {
-    if (isReadOnly) return;
-
-    const unsub = usePlayerStore.subscribe((state) => {
-      const { players, payments, foodOrders } = state;
-      const stateToSync: GameState = { players, payments, foodOrders };
-      console.log("[Firestore Sync] Saving state:", stateToSync);
-      saveGameState(gameId, stateToSync);
+    const unsub = subscribeToGameState(gameId, (remoteState) => {
+      console.log("[Firestore Sync] Received update:", remoteState);
+      setFullState(remoteState);
     });
-
     return () => unsub();
-  }, [gameId, isReadOnly]);
+  }, [gameId, setFullState]);
+
+  // Third: Push Zustand changes to Firestore
+  useEffect(() => {
+    if (isReadOnly || !isInitializedRef.current) return;
+
+    const newSerializedState = JSON.stringify({
+      players,
+      payments,
+      foodOrders,
+    });
+    if (previousStateRef.current !== newSerializedState) {
+      previousStateRef.current = newSerializedState;
+      const newState: GameState = { players, payments, foodOrders };
+      console.log("[Firestore Sync] Saving state to Firestore:", newState);
+      saveGameState(gameId, newState);
+    }
+  }, [players, payments, foodOrders, isReadOnly, gameId]);
 };
