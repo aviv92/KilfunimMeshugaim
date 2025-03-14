@@ -9,10 +9,12 @@ import { Menu, MenuItem } from "@mui/material";
 import { shareGame } from "./utils/shareGame";
 import NewGameButton from "../../screens/EndGame/components/NewGameButton/NewGameButton";
 import { usePlayerStore } from "../../stores/usePlayerStore";
+import AdminPanel from "../AdminPanel/AdminPanel";
 
 const ButtonAppBar: FC = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isReadOnly = usePlayerStore((s) => s.isReadOnly);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [adminOpen, setAdminOpen] = useState(false);
 
   const handleMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -72,12 +74,27 @@ const ButtonAppBar: FC = () => {
             <MenuItem>
               <NewGameButton />
             </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                setAdminOpen(true);
+              }}
+            >
+              Admin Panel
+            </MenuItem>
           </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             קלפונים משוגעים
           </Typography>
         </Toolbar>
       </AppBar>
+      <AdminPanel
+        gameId={
+          new URLSearchParams(window.location.search).get("gameId") || "default"
+        }
+        open={adminOpen}
+        onClose={() => setAdminOpen(false)}
+      />
     </Box>
   );
 };
