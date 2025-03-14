@@ -1,23 +1,22 @@
 import { useEffect, useRef } from "react";
-import { usePlayerStore } from "../stores";
+import { usePlayerStore } from "../../stores";
 import {
   subscribeToGameState,
   saveGameState,
   getGameState,
-} from "../services/firestoreService";
-import { GameState } from "../services/firestoreService";
+  GameState,
+} from "../services/realtimeDBService";
 
-export const useFirestoreSync = (
+export const useRealtimeSync = (
   gameId: string,
   isReadOnly: boolean = false
 ) => {
   const state = usePlayerStore();
   const { setFullState, players, payments, foodOrders } = state;
 
-  const previousStateRef = useRef<string>(""); // serialized state cache
-  const isInitializedRef = useRef(false); // guard for initial sync
+  const previousStateRef = useRef<string>("");
+  const isInitializedRef = useRef(false);
 
-  // First: Load initial state from Firestore
   useEffect(() => {
     const init = async () => {
       const remote = await getGameState(gameId);
@@ -29,16 +28,14 @@ export const useFirestoreSync = (
     init();
   }, [gameId, setFullState]);
 
-  // Second: Subscribe to remote Firestore updates
   useEffect(() => {
     const unsub = subscribeToGameState(gameId, (remoteState) => {
-      console.log("[Firestore Sync] Received update:", remoteState);
+      console.log("[Realtime Sync] Received update:", remoteState);
       setFullState(remoteState);
     });
     return () => unsub();
   }, [gameId, setFullState]);
 
-  // Third: Push Zustand changes to Firestore
   useEffect(() => {
     if (isReadOnly || !isInitializedRef.current) return;
 
@@ -50,7 +47,7 @@ export const useFirestoreSync = (
     if (previousStateRef.current !== newSerializedState) {
       previousStateRef.current = newSerializedState;
       const newState: GameState = { players, payments, foodOrders };
-      console.log("[Firestore Sync] Saving state to Firestore:", newState);
+      console.log("[Realtime Sync] Saving state:", newState);
       saveGameState(gameId, newState);
     }
   }, [players, payments, foodOrders, isReadOnly, gameId]);

@@ -3,8 +3,8 @@ import TopBar from "./layout/TopBar/TopBar";
 import EndGame from "./screens/EndGame/EndGame";
 import { usePlayerStore } from "./stores";
 import Game from "./screens/Game/Game";
-import { useFirestoreSync } from "./hooks/useFirestoreSync";
 import { v4 as uuidv4 } from "uuid";
+import { useRealtimeSync } from "./firebase/hooks/useRealtimeDBSync";
 
 const App: FC = () => {
   const { isEndGame } = usePlayerStore();
@@ -13,7 +13,7 @@ const App: FC = () => {
   const gameId = urlParams.get("gameId") || "default";
   const isReadOnly = urlParams.get("readonly") === "true";
 
-  useFirestoreSync(gameId, isReadOnly);
+  useRealtimeSync(gameId, isReadOnly);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
