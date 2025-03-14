@@ -9,7 +9,7 @@ export const getGameId = () => {
 
 export const shareGame = (readOnly = true) => {
   const gameId = getGameId();
-  const baseUrl = window.location.origin;
+  const baseUrl = `${window.location.origin}/KilfunimMeshugaim`;
 
   const link = `${baseUrl}/?gameId=${gameId}${
     readOnly ? "&readonly=true" : ""
