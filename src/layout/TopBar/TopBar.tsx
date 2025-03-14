@@ -74,14 +74,16 @@ const ButtonAppBar: FC = () => {
             <MenuItem>
               <NewGameButton />
             </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleClose();
-                setAdminOpen(true);
-              }}
-            >
-              Admin Panel
-            </MenuItem>
+            {!isReadOnly && (
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setAdminOpen(true);
+                }}
+              >
+                Admin Panel
+              </MenuItem>
+            )}
           </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             קלפונים משוגעים
