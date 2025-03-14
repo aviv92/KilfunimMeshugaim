@@ -8,9 +8,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Menu, MenuItem } from "@mui/material";
 import { shareGame } from "./utils/shareGame";
 import NewGameButton from "../../screens/EndGame/components/NewGameButton/NewGameButton";
+import { usePlayerStore } from "../../stores/usePlayerStore";
 
 const ButtonAppBar: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const isReadOnly = usePlayerStore((s) => s.isReadOnly);
 
   const handleMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -55,6 +57,7 @@ const ButtonAppBar: FC = () => {
                 handleClose();
                 shareGame(false);
               }}
+              disabled={isReadOnly}
             >
               Share game
             </MenuItem>

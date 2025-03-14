@@ -39,6 +39,8 @@ type StoreState = {
   foodOrders: FoodOrder[];
   addFoodOrder: (order: FoodOrder) => void;
   setFullState: (state: Partial<StoreState>) => void;
+  isReadOnly?: boolean;
+  setIsReadOnly: (readOnly: boolean) => void;
 };
 
 const initialGameState = {
@@ -47,6 +49,7 @@ const initialGameState = {
   isEndGame: false,
   payments: [],
   foodOrders: [],
+  isReadOnly: false,
 };
 
 export const DEFAULT_REBUY = 50;
@@ -109,6 +112,7 @@ export const usePlayerStore = create<StoreState>()(
           foodOrders: [...state.foodOrders, order],
         })),
       setFullState: (newState) => set((prev) => ({ ...prev, ...newState })),
+      setIsReadOnly: (readonly) => set({ isReadOnly: readonly }),
     }),
     { name: "player-storage" }
   )

@@ -10,7 +10,11 @@ import { DEFAULT_REBUY, usePlayerStore } from "../../../../stores";
 import { PlayerRowProps } from "./utils/types";
 
 const PlayerActions: FC<PlayerRowProps> = ({ player }) => {
-  const { updateOwed, usedShowMe, quitPlayer } = usePlayerStore();
+  const { updateOwed, usedShowMe, quitPlayer, isReadOnly } = usePlayerStore();
+
+  if (isReadOnly) {
+    return null;
+  }
 
   const handleQuitPlayer = () => {
     const finalResult = prompt("Enter final amount");

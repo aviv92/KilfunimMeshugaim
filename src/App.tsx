@@ -7,11 +7,25 @@ import { v4 as uuidv4 } from "uuid";
 import { useRealtimeSync } from "./firebase/hooks/useRealtimeDBSync";
 
 const App: FC = () => {
-  const { isEndGame } = usePlayerStore();
+  const { isEndGame, setIsReadOnly } = usePlayerStore();
 
   const urlParams = new URLSearchParams(window.location.search);
   const gameId = urlParams.get("gameId") || "default";
-  const isReadOnly = urlParams.get("readonly") === "true";
+  const readonlyParam = urlParams.get("readonly") === "true";
+
+  const readonlyLocked =
+    sessionStorage.getItem("readonly-protected") === "true";
+  const isReadOnly = readonlyParam || readonlyLocked;
+
+  useEffect(() => {
+    if (readonlyParam) {
+      sessionStorage.setItem("readonly-protected", "true");
+    }
+  }, [readonlyParam]);
+
+  useEffect(() => {
+    setIsReadOnly(isReadOnly);
+  }, [setIsReadOnly, isReadOnly]);
 
   useRealtimeSync(gameId, isReadOnly);
 
