@@ -1,30 +1,83 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { usePlayerStore, DEFAULT_REBUY } from "../../../../stores";
-import { TextField, Button, Box } from "@mui/material";
-import { cleanAndSplitNames } from "./utils/utils";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+
+// Alphabetically sorted list
+const predefinedPlayers = [
+  "Avihoo",
+  "Aviv",
+  "Barak",
+  "Barhom",
+  "Hod",
+  "Itsik",
+  "Kubani",
+  "Meniv",
+  "Moshiko",
+  "Tamir",
+  "Yoni",
+  "Yotam",
+];
 
 const AddPlayer: FC = () => {
-  const { inputName, setInputName, addPlayers } = usePlayerStore();
+  const { addPlayers, players, isReadOnly } = usePlayerStore();
+  const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
+
+  // Extract already-added player names
+  const alreadyAdded = players.map((p) => p.name);
+
+  // Filter dropdown options to exclude already-added
+  const availablePlayers = predefinedPlayers.filter(
+    (name) => !alreadyAdded.includes(name)
+  );
+
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
+    const value = event.target.value;
+    setSelectedPlayers(typeof value === "string" ? value.split(",") : value);
+  };
 
   const handleAddPlayer = () => {
-    if (inputName.trim()) {
-      const playerNames = cleanAndSplitNames(inputName);
-      addPlayers(playerNames, DEFAULT_REBUY);
-      setInputName("");
+    if (selectedPlayers.length > 0) {
+      addPlayers(selectedPlayers, DEFAULT_REBUY);
+      setSelectedPlayers([]);
     }
   };
 
+  if (isReadOnly) return null;
+
   return (
-    <Box display="flex" gap="10px">
-      <TextField
-        label="Enter player name(s)"
-        variant="outlined"
-        fullWidth
-        value={inputName}
-        onChange={(e) => setInputName(e.target.value)}
-        placeholder="Use commas to separate names"
-      />
-      <Button variant="contained" color="primary" onClick={handleAddPlayer}>
+    <Box display="flex" gap="10px" width="100%">
+      <FormControl fullWidth>
+        <InputLabel id="player-select-label">Select Players</InputLabel>
+        <Select
+          multiple
+          labelId="player-select-label"
+          value={selectedPlayers}
+          onChange={handleChange}
+          input={<OutlinedInput label="Select Players" />}
+          renderValue={(selected) => selected.join(", ")}
+        >
+          {availablePlayers.map((name) => (
+            <MenuItem key={name} value={name}>
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleAddPlayer}
+        disabled={selectedPlayers.length === 0}
+      >
         Add
       </Button>
     </Box>
