@@ -44,6 +44,7 @@ export const useRealtimeSync = (
       payments,
       foodOrders,
     });
+
     if (previousStateRef.current !== newSerializedState) {
       previousStateRef.current = newSerializedState;
       const newState: GameState = { players, payments, foodOrders };

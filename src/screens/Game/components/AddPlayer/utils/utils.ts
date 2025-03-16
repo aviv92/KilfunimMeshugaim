@@ -11,3 +11,20 @@ export const cleanAndSplitNames = (input: string): string[] => {
     .map((name) => name.trim())
     .filter((name) => name !== "");
 };
+
+// Alphabetically sorted list
+export const predefinedPlayers = [
+  "Avihoo",
+  "Aviv",
+  "Barak",
+  "Barhom",
+  "Hod",
+  "Itsik",
+  "Kubani",
+  "Meniv",
+  "Moshiko",
+  "Orel",
+  "Tamir",
+  "Yoni",
+  "Yotam",
+];

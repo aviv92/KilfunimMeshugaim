@@ -10,22 +10,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-
-// Alphabetically sorted list
-const predefinedPlayers = [
-  "Avihoo",
-  "Aviv",
-  "Barak",
-  "Barhom",
-  "Hod",
-  "Itsik",
-  "Kubani",
-  "Meniv",
-  "Moshiko",
-  "Tamir",
-  "Yoni",
-  "Yotam",
-];
+import { predefinedPlayers } from "./utils/utils";
 
 const AddPlayer: FC = () => {
   const { addPlayers, players, isReadOnly } = usePlayerStore();

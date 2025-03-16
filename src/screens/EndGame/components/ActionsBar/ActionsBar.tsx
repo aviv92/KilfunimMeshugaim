@@ -3,7 +3,7 @@ import { FC } from "react";
 import ControlPanel from "../../../../layout/ControlPanel/ControlPanel";
 import { calculatePayments } from "../../utils/utils";
 import { usePlayerStore } from "../../../../stores";
-import WhatsAppShareButton from "../WhatsAppShareButton/WhatsAppShareButton";
+import WhatsAppShareButton from "./components/WhatsAppShareButton/WhatsAppShareButton";
 import NewGameButton from "../NewGameButton/NewGameButton";
 
 const ActionsBar: FC = () => {

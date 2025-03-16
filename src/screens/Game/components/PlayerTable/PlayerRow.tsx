@@ -1,4 +1,4 @@
-import { TableRow, TableCell, Avatar, Stack } from "@mui/material";
+import { TableRow, TableCell, Stack, Box, Tooltip } from "@mui/material";
 import { FC } from "react";
 import { PlayerRowProps } from "./utils/types";
 import PlayerActions from "./PlayerActions";
@@ -9,7 +9,17 @@ const PlayerRow: FC<PlayerRowProps> = ({ player, index }) => {
     <TableRow key={player.id}>
       <TableCell>
         <Stack direction="row" gap={2}>
-          <Avatar alt="Random fish" src={getFishImage(player.owed)} />{" "}
+          <Box display="flex" alignItems="center" gap={1}>
+            <Tooltip title={`${player.name} Owes: ${player.owed}`}>
+              <img
+                src={getFishImage(player.owed)}
+                alt="fish"
+                width={32}
+                height={32}
+                style={{ objectFit: "contain" }}
+              />
+            </Tooltip>
+          </Box>
           <div style={{ display: "flex", alignItems: "center" }}>
             {player.name}
           </div>

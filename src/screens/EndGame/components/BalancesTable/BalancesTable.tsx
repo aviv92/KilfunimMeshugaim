@@ -26,6 +26,7 @@ const BalancesTable: FC = () => {
         balance: finalResults[index] - player.owed,
       }))
       .reduce((sum, player) => sum + player.balance, 0);
+
   return (
     <TableContainer component={Paper}>
       <Table size="small">
