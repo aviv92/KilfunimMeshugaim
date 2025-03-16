@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { IconButton } from "@mui/material";
-import { usePlayerStore } from "../../../../stores/usePlayerStore";
+import { usePlayerStore } from "../../../../../../stores/usePlayerStore";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { calculateNetPayments } from "./utils";
 

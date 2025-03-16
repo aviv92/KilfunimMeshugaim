@@ -1,4 +1,4 @@
-import { Payment, FoodOrder } from "../../../../stores/usePlayerStore";
+import { FoodOrder, Payment } from "../../../../../../stores/usePlayerStore";
 
 export const calculateNetPayments = (
   payments: Payment[],
