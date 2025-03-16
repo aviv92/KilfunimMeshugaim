@@ -17,14 +17,26 @@ If you are developing a production application, we recommend updating the config
 export default {
   // other rules...
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json", "./tsconfig.app.json"],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+# Credit section
+
+### Icons
+
+<a href="https://www.flaticon.com/free-icons/gold" title="gold icons">Gold icons created by Nsit - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/gold-fish" title="gold fish icons">Gold fish icons created by Smashicons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/frozen" title="frozen icons">Frozen icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/fish" title="fish icons">Fish icons created by Mihimihi - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/fish" title="fish icons">Fish icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/fish-bone" title="fish bone icons">Fish bone icons created by Good Ware - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/whale" title="whale icons">Whale icons created by Freepik - Flaticon</a>
