@@ -10,16 +10,14 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { predefinedPlayers } from "./utils/utils";
+import { predefinedPlayers } from "./utils/constants";
 
 const AddPlayer: FC = () => {
   const { addPlayers, players, isReadOnly } = usePlayerStore();
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
 
-  // Extract already-added player names
   const alreadyAdded = players.map((p) => p.name);
 
-  // Filter dropdown options to exclude already-added
   const availablePlayers = predefinedPlayers.filter(
     (name) => !alreadyAdded.includes(name)
   );

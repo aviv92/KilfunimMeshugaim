@@ -60,7 +60,11 @@ const FoodOrderModal: FC = () => {
     });
   };
 
-  const handleChange = (index: number, field: keyof FoodOrder, value: any) => {
+  const handleChange = (
+    index: number,
+    field: keyof FoodOrder,
+    value: unknown
+  ) => {
     setCurrentOrders((prev) => {
       const updatedOrders = [...prev];
       updatedOrders[index] = {
