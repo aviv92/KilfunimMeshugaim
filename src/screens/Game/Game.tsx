@@ -7,7 +7,12 @@ import EndGame from "../EndGame/components/EndGameButton/EndGameButton";
 import FoodOrder from "./components/FoodOrder/FoodOrder";
 
 const Game: FC = () => {
-  const { players } = usePlayerStore();
+  const { players, isReadOnly } = usePlayerStore();
+
+  if (isReadOnly) {
+    return <PlayerTable />;
+  }
+
   return (
     <>
       <PlayerTable />
