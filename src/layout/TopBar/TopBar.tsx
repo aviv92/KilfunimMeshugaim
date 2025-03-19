@@ -7,14 +7,20 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Menu, MenuItem } from "@mui/material";
 import { shareGame } from "./utils/shareGame";
-import NewGameButton from "../../screens/EndGame/components/NewGameButton/NewGameButton";
 import { usePlayerStore } from "../../stores/usePlayerStore";
 import AdminPanel from "../AdminPanel/AdminPanel";
+import { v4 as uuidv4 } from "uuid";
 
 const ButtonAppBar: FC = () => {
-  const isReadOnly = usePlayerStore((s) => s.isReadOnly);
+  const { isReadOnly, startGame } = usePlayerStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [adminOpen, setAdminOpen] = useState(false);
+
+  const handleCreateNewGame = () => {
+    const newGameId = uuidv4().slice(0, 8);
+    startGame();
+    window.location.replace(`/KilfunimMeshugaim/?gameId=${newGameId}`);
+  };
 
   const handleMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -71,8 +77,13 @@ const ButtonAppBar: FC = () => {
             >
               Share game (read only)
             </MenuItem>
-            <MenuItem>
-              <NewGameButton />
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                handleCreateNewGame();
+              }}
+            >
+              🎲 Create New Game
             </MenuItem>
             {!isReadOnly && (
               <MenuItem

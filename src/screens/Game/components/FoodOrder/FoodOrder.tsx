@@ -76,8 +76,8 @@ const FoodOrderModal: FC = () => {
   };
 
   const calculateParticipantShare = (order: FoodOrder, participant: string) => {
-    const foodCost = order.foodCosts[participant] || 0;
-    const tipShare = order.tip / (order.participants.length + 1);
+    const foodCost = order.foodCosts?.[participant] || 0;
+    const tipShare = order?.tip / (order.participants.length + 1);
     return foodCost + tipShare;
   };
 

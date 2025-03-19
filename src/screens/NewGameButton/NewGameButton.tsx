@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { usePlayerStore } from "../../../../stores/usePlayerStore";
+import { usePlayerStore } from "../../stores/usePlayerStore";
 
 const NewGameButton: FC = () => {
   const startGame = usePlayerStore((s) => s.startGame);

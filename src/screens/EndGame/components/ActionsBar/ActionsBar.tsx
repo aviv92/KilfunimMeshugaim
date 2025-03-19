@@ -4,7 +4,7 @@ import ControlPanel from "../../../../layout/ControlPanel/ControlPanel";
 import { calculatePayments } from "../../utils/utils";
 import { usePlayerStore } from "../../../../stores";
 import WhatsAppShareButton from "./components/WhatsAppShareButton/WhatsAppShareButton";
-import NewGameButton from "../NewGameButton/NewGameButton";
+import NewGameButton from "../../../NewGameButton/NewGameButton";
 
 const ActionsBar: FC = () => {
   const { players, payments, setPayments } = usePlayerStore();
