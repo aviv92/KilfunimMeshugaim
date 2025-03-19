@@ -59,7 +59,14 @@ const ButtonAppBar: FC = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Close</MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                shareGame();
+              }}
+            >
+              Share game (read only)
+            </MenuItem>
             <MenuItem
               onClick={() => {
                 handleClose();
@@ -72,16 +79,9 @@ const ButtonAppBar: FC = () => {
             <MenuItem
               onClick={() => {
                 handleClose();
-                shareGame();
-              }}
-            >
-              Share game (read only)
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleClose();
                 handleCreateNewGame();
               }}
+              disabled={isReadOnly}
             >
               🎲 Create New Game
             </MenuItem>
