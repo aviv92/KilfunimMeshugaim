@@ -17,7 +17,7 @@ export const getAllPayments = (
     return order.participants.map((participant) => ({
       from: participant,
       to: order.payer,
-      amount: order.foodCosts[participant] + tipPerPerson,
+      amount: order.foodCosts?.[participant] + tipPerPerson,
     }));
   });
 
