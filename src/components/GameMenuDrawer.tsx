@@ -60,7 +60,10 @@ const GameMenuDrawer: FC<Props> = ({ isHost, onEndGame, gameId }) => {
               End Game
             </MenuItem>
           )}
-          <MenuItem onClick={() => navigate("/")}>Back to Main Menu</MenuItem>
+          <MenuItem onClick={() => navigate("/")}>
+            <MenuIcon fontSize="small" sx={{ mr: 1 }} />
+            Back to Main Menu
+          </MenuItem>
         </MenuList>
       </Drawer>
     </>
