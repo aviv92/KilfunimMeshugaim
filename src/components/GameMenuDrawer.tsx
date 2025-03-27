@@ -9,6 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShareIcon from "@mui/icons-material/Share";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   isHost: boolean;
@@ -17,14 +18,13 @@ interface Props {
 }
 
 const GameMenuDrawer: FC<Props> = ({ isHost, onEndGame, gameId }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const handleShare = () => {
     const link = `${window.location.origin}/KilfunimMeshugaim/#/game/${gameId}/in-play`;
     navigator.clipboard.writeText(link);
   };
-
-  if (!isHost) return null;
 
   return (
     <>
@@ -54,10 +54,13 @@ const GameMenuDrawer: FC<Props> = ({ isHost, onEndGame, gameId }) => {
             <ShareIcon fontSize="small" sx={{ mr: 1 }} />
             Share Game
           </MenuItem>
-          <MenuItem onClick={onEndGame}>
-            <PowerSettingsNewIcon fontSize="small" sx={{ mr: 1 }} />
-            End Game
-          </MenuItem>
+          {isHost && (
+            <MenuItem onClick={onEndGame}>
+              <PowerSettingsNewIcon fontSize="small" sx={{ mr: 1 }} />
+              End Game
+            </MenuItem>
+          )}
+          <MenuItem onClick={() => navigate("/")}>Back to Main Menu</MenuItem>
         </MenuList>
       </Drawer>
     </>
