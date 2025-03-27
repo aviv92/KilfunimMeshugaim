@@ -10,7 +10,7 @@ import {
   DialogActions,
   TextField,
   Button,
-  Box,
+  CardContent,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -18,8 +18,9 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { DEFAULT_CHIP_AMOUNT } from "../utils/constants";
-import { getFishImage } from "../utils/fish";
+import { getFishImage, getFishLevelUpMessage } from "../utils/fish";
 import { Player } from "../types/player";
+import FishLevelUpOverlay from "./FishLevelUpOverlay";
 
 interface PlayerCardProps extends Player {
   gameId: string;
@@ -36,6 +37,8 @@ const PlayerCard: FC<PlayerCardProps> = ({
 }) => {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [finalChips, setFinalChips] = useState("");
+  const [showFishLevelUp, setShowFishLevelUp] = useState(false);
+  const [fishMessage, setFishMessage] = useState("");
 
   const updatePlayerChips = async (delta: number) => {
     const gameRef = doc(db, "games", gameId);
@@ -44,11 +47,22 @@ const PlayerCard: FC<PlayerCardProps> = ({
 
     const updated = players.map((p: Player) => {
       if (p.name !== name) return p;
+
       const newTook = p.took + delta;
       if (newTook < DEFAULT_CHIP_AMOUNT) {
         alert("You can't take less than the initial amount!");
         return;
       }
+
+      if (delta > 0) {
+        const newFish = getFishImage(newTook);
+        const currentFish = getFishImage(p.took);
+        if (newFish !== currentFish) {
+          setFishMessage(getFishLevelUpMessage(name, newTook));
+          setShowFishLevelUp(true);
+        }
+      }
+
       return { ...p, took: newTook };
     });
 
@@ -72,50 +86,54 @@ const PlayerCard: FC<PlayerCardProps> = ({
     setFinalChips("");
   };
 
-  const fishImage = getFishImage(took);
-
   return (
     <>
-      <Card sx={{ display: "flex", alignItems: "center", padding: 2 }}>
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="h6">{name}</Typography>
-          <Typography variant="body1">{took} took</Typography>
-          {chips && (
-            <Typography variant="caption" color="text.secondary">
-              {chips} chips
-            </Typography>
-          )}
-          {leftEarly && (
-            <Typography variant="caption" color="text.secondary">
-              (Left early)
-            </Typography>
-          )}
-          {isHost && (
-            <Stack direction="row" spacing={1} mt={1}>
-              <IconButton
-                onClick={() => updatePlayerChips(DEFAULT_CHIP_AMOUNT)}
-                disabled={leftEarly}
-              >
-                <AddIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => updatePlayerChips(-DEFAULT_CHIP_AMOUNT)}
-              >
-                <RemoveIcon />
-              </IconButton>
-              <IconButton onClick={() => setLeaveOpen(true)}>
-                <ExitToAppIcon />
-              </IconButton>
+      <Card>
+        <CardContent>
+          <Stack spacing={2} alignItems="center">
+            {/* Player Name */}
+            <Stack direction="row" spacing={2} justifyContent="center">
+              <Typography variant="h6" fontWeight="bold">
+                {name}
+              </Typography>
             </Stack>
-          )}
-        </Box>
-        <Box>
-          <img
-            src={fishImage}
-            alt="Fish"
-            style={{ height: 60, marginLeft: 16 }}
-          />
-        </Box>
+
+            {/* Took & Chips */}
+            <Stack direction="row" spacing={2} justifyContent="center">
+              <Typography variant="body2">🎲 Took: {took}</Typography>
+              {chips && (
+                <Typography variant="body2">💰 Final: {chips}</Typography>
+              )}
+            </Stack>
+
+            {/* Fish Image */}
+            <img src={getFishImage(took)} alt="fish" style={{ height: 60 }} />
+
+            {/* Action Buttons */}
+            {isHost && (
+              <Stack direction="row" spacing={1} justifyContent="center">
+                <IconButton
+                  onClick={() => updatePlayerChips(DEFAULT_CHIP_AMOUNT)}
+                  disabled={leftEarly}
+                >
+                  <AddIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => updatePlayerChips(-DEFAULT_CHIP_AMOUNT)}
+                  disabled={leftEarly}
+                >
+                  <RemoveIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => setLeaveOpen(true)}
+                  disabled={leftEarly}
+                >
+                  <ExitToAppIcon />
+                </IconButton>
+              </Stack>
+            )}
+          </Stack>
+        </CardContent>
       </Card>
 
       <Dialog open={leaveOpen} onClose={() => setLeaveOpen(false)}>
@@ -137,6 +155,14 @@ const PlayerCard: FC<PlayerCardProps> = ({
           </Button>
         </DialogActions>
       </Dialog>
+
+      <FishLevelUpOverlay
+        open={showFishLevelUp}
+        playerName={name}
+        fishImg={getFishImage(took)}
+        onClose={() => setShowFishLevelUp(false)}
+        message={fishMessage}
+      />
     </>
   );
 };

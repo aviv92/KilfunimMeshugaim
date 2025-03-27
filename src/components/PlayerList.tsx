@@ -1,7 +1,7 @@
 // src/components/PlayerList.tsx
 import { FC } from "react";
 import PlayerCard from "./PlayerCard";
-import { Stack } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Player } from "../types/player";
 
 interface PlayerListProps {
@@ -11,16 +11,18 @@ interface PlayerListProps {
 }
 
 const PlayerList: FC<PlayerListProps> = ({ players, gameId, isHost }) => (
-  <Stack spacing={2}>
+  <Grid container spacing={2}>
     {players.map((player) => (
-      <PlayerCard
-        key={player.name}
-        gameId={gameId}
-        {...player}
-        isHost={isHost}
-      />
+      <Grid item xs={12} sm={6} md={4} key={player.name}>
+        <PlayerCard
+          key={player.name}
+          gameId={gameId}
+          {...player}
+          isHost={isHost}
+        />
+      </Grid>
     ))}
-  </Stack>
+  </Grid>
 );
 
 export default PlayerList;

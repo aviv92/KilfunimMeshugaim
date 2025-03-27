@@ -36,11 +36,15 @@ const DebtGraph: FC<Props> = ({ debts }) => {
   const nodes: GraphNode[] = Array.from(nodesSet).map((name) => ({ id: name }));
 
   return (
-    <Box height={500}>
+    <Box sx={{ height: "calc(100vh - 200px)", width: "100%" }}>
       <ForceGraph2D
         graphData={{ nodes, links }}
         nodeLabel="id"
         nodeAutoColorBy="id"
+        width={window.innerWidth}
+        height={window.innerHeight - 200}
+        enableZoomInteraction
+        enablePointerInteraction
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node.id as string;
           const fontSize = 12 / globalScale;

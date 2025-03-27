@@ -88,11 +88,12 @@ const GameClosing: FC = () => {
   if (loading) return <CircularProgress />;
 
   return (
-    <Container>
-      <Typography variant="h4" mt={4}>
-        Final Chip Count
-      </Typography>
-      <Stack spacing={2} mt={3}>
+    <Container maxWidth="sm" sx={{ mt: 4 }}>
+      <Stack spacing={4} alignItems="center">
+        <Typography variant="h4" mt={4}>
+          Final Chip Count
+        </Typography>
+
         {players.map((p) => (
           <TextField
             key={p.name}
@@ -102,21 +103,21 @@ const GameClosing: FC = () => {
             onChange={(e) => handleChange(p.name, e.target.value)}
           />
         ))}
+
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <Typography mt={2}>
+          Balance remaining: {remainingBalance} chips
+        </Typography>
+
+        <Button variant="contained" sx={{ mt: 3 }} onClick={handleSubmit}>
+          Finish & Show Results
+        </Button>
       </Stack>
-
-      {error && (
-        <Alert severity="error" sx={{ mt: 2 }}>
-          {error}
-        </Alert>
-      )}
-
-      <Typography mt={2}>
-        Balance remaining: {remainingBalance} chips
-      </Typography>
-
-      <Button variant="contained" sx={{ mt: 3 }} onClick={handleSubmit}>
-        Finish & Show Results
-      </Button>
     </Container>
   );
 };

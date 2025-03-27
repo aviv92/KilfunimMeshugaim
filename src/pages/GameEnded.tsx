@@ -9,6 +9,7 @@ import {
   ToggleButton,
   Button,
   Box,
+  Stack,
 } from "@mui/material";
 import { Player } from "../types/player";
 import { calculateDebts, DebtTransaction } from "../utils/debt";
@@ -45,17 +46,26 @@ const GameEnded: FC = () => {
   };
 
   return (
-    <Container>
-      <Typography variant="h4" mt={4}>
-        Final Results
-      </Typography>
+    <Container maxWidth="sm" sx={{ mt: 4 }}>
+      <Stack spacing={4} alignItems="center">
+        <Typography variant="h4" mt={4}>
+          Final Results – Pay up, losers 💸
+        </Typography>
 
-      <Box
-        mt={3}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
+        <Box
+          mt={3}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Button variant="contained" onClick={handleShare}>
+            Share on WhatsApp
+          </Button>
+          <Button variant="outlined" onClick={() => navigate("/")}>
+            Back to Main Menu
+          </Button>
+        </Box>
+
         <ToggleButtonGroup
           value={view}
           exclusive
@@ -65,21 +75,14 @@ const GameEnded: FC = () => {
           <ToggleButton value="graphic">Graphic View</ToggleButton>
         </ToggleButtonGroup>
 
-        <Button variant="contained" onClick={handleShare}>
-          Share on WhatsApp
-        </Button>
-        <Button variant="outlined" onClick={() => navigate("/")}>
-          Back to Main Menu
-        </Button>
-      </Box>
-
-      <Box mt={4}>
-        {view === "table" ? (
-          <DebtTable debts={debts} />
-        ) : (
-          <DebtGraph debts={debts} />
-        )}
-      </Box>
+        <Box mt={4}>
+          {view === "table" ? (
+            <DebtTable debts={debts} />
+          ) : (
+            <DebtGraph debts={debts} />
+          )}
+        </Box>
+      </Stack>
     </Container>
   );
 };

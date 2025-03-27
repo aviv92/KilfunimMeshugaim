@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase";
-import { Container, Typography, CircularProgress } from "@mui/material";
+import { Container, CircularProgress, Stack } from "@mui/material";
 import { Player } from "../types/player";
 import PlayerList from "../components/PlayerList";
 import AddPlayerForm from "../components/AddPlayerForm";
@@ -64,31 +64,29 @@ const GameInPlay: FC = () => {
   if (loading) return <CircularProgress />;
 
   return (
-    <Container>
-      <Typography variant="h4" mt={4}>
-        Game: {gameId}
-      </Typography>
-
-      <GameMenuDrawer
-        isHost={isHost}
-        gameId={gameId!}
-        onEndGame={async () => {
-          await updateDoc(doc(db, "games", gameId!), { status: "closing" });
-        }}
-        onRequestHost={handleRequestHost}
-        hostRequests={hostRequests}
-        onApproveHost={handleApproveHost}
-      />
-
-      {/* Add Player Form only if host */}
-      {isHost && (
-        <AddPlayerForm
+    <Container maxWidth="sm" sx={{ mt: 4 }}>
+      <Stack spacing={4} alignItems="center">
+        <GameMenuDrawer
+          isHost={isHost}
           gameId={gameId!}
-          existingPlayers={players.map((p) => p.name)}
+          onEndGame={async () => {
+            await updateDoc(doc(db, "games", gameId!), { status: "closing" });
+          }}
+          onRequestHost={handleRequestHost}
+          hostRequests={hostRequests}
+          onApproveHost={handleApproveHost}
         />
-      )}
 
-      <PlayerList players={players} gameId={gameId!} isHost={isHost} />
+        {/* Add Player Form only if host */}
+        {isHost && (
+          <AddPlayerForm
+            gameId={gameId!}
+            existingPlayers={players.map((p) => p.name)}
+          />
+        )}
+
+        <PlayerList players={players} gameId={gameId!} isHost={isHost} />
+      </Stack>
     </Container>
   );
 };

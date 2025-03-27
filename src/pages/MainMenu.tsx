@@ -1,13 +1,24 @@
 // src/pages/MainMenu.tsx
 import { FC, useState } from "react";
-import { Button, Stack, Typography, TextField } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Typography,
+  TextField,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 
 const MainMenu: FC = () => {
-  const [joinCode, setJoinCode] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [gameIdInput, setGameIdInput] = useState("");
   const navigate = useNavigate();
 
   const handleCreateGame = async () => {
@@ -27,29 +38,52 @@ const MainMenu: FC = () => {
     navigate(`/game/${newGameId}/in-play`);
   };
 
-  const handleJoinGame = () => {
-    if (joinCode.trim()) {
-      navigate(`/game/${joinCode}/in-play`);
+  const handleJoin = () => {
+    if (gameIdInput.trim()) {
+      navigate(`/game/${gameIdInput.trim()}/in-play`);
+      setDialogOpen(false);
+      setGameIdInput("");
     }
   };
 
   return (
-    <Stack spacing={4} alignItems="center" mt={10}>
-      <Typography variant="h3">Poker Night</Typography>
+    <Container maxWidth="sm" sx={{ mt: 4 }}>
+      <Stack spacing={4} alignItems="center" mt={10}>
+        <Typography variant="h4" fontWeight="bold">
+          🐟 Kilfunim Meshugaim
+        </Typography>
 
-      <Button variant="contained" onClick={handleCreateGame}>
-        Create New Game
-      </Button>
+        <Button variant="contained" onClick={handleCreateGame}>
+          Create New Game
+        </Button>
 
-      <TextField
-        label="Enter Game Code"
-        value={joinCode}
-        onChange={(e) => setJoinCode(e.target.value)}
-      />
-      <Button variant="outlined" onClick={handleJoinGame}>
-        Join Game
-      </Button>
-    </Stack>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => setDialogOpen(true)}
+        >
+          Join Game
+        </Button>
+      </Stack>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>Join Game</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Game ID"
+            fullWidth
+            value={gameIdInput}
+            onChange={(e) => setGameIdInput(e.target.value)}
+            autoFocus
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleJoin}>
+            Join
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Container>
   );
 };
 

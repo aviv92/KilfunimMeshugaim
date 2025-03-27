@@ -6,6 +6,8 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import ShareIcon from "@mui/icons-material/Share";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { FC, useState } from "react";
 
 interface Props {
@@ -35,7 +37,20 @@ const GameMenuDrawer: FC<Props> = ({
 
   return (
     <>
-      <IconButton onClick={() => setOpen(true)}>
+      <IconButton
+        onClick={() => setOpen((prev) => !prev)}
+        sx={{
+          position: "fixed",
+          top: 16,
+          right: 16,
+          backgroundColor: "white",
+          border: "1px solid #ccc",
+          boxShadow: 2,
+          "&:hover": {
+            backgroundColor: "#f0f0f0",
+          },
+        }}
+      >
         <MenuIcon />
       </IconButton>
       <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
@@ -46,8 +61,14 @@ const GameMenuDrawer: FC<Props> = ({
 
           {isHost ? (
             <>
-              <MenuItem onClick={handleShare}>Share Game</MenuItem>
-              <MenuItem onClick={onEndGame}>End Game</MenuItem>
+              <MenuItem onClick={handleShare}>
+                <ShareIcon fontSize="small" sx={{ mr: 1 }} />
+                Share Game
+              </MenuItem>
+              <MenuItem onClick={onEndGame}>
+                <PowerSettingsNewIcon fontSize="small" sx={{ mr: 1 }} />
+                End Game
+              </MenuItem>
             </>
           ) : (
             <MenuItem onClick={onRequestHost}>Request Host Access</MenuItem>
