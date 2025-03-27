@@ -18,9 +18,8 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { DEFAULT_CHIP_AMOUNT } from "../utils/constants";
-import { getFishImage, getFishLevelUpMessage } from "../utils/fish";
+import { getFishImage } from "../utils/fish";
 import { Player } from "../types/player";
-import FishLevelUpOverlay from "./FishLevelUpOverlay";
 
 interface PlayerCardProps extends Player {
   gameId: string;
@@ -37,36 +36,33 @@ const PlayerCard: FC<PlayerCardProps> = ({
 }) => {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [finalChips, setFinalChips] = useState("");
-  const [showFishLevelUp, setShowFishLevelUp] = useState(false);
-  const [fishMessage, setFishMessage] = useState("");
 
   const updatePlayerChips = async (delta: number) => {
     const gameRef = doc(db, "games", gameId);
     const docSnap = await getDoc(gameRef);
     const players: Player[] = docSnap.data()?.players ?? [];
+    let newTook = 0;
 
     const updated = players.map((p: Player) => {
       if (p.name !== name) return p;
 
-      const newTook = p.took + delta;
+      newTook = p.took + delta;
       if (newTook < DEFAULT_CHIP_AMOUNT) {
         alert("You can't take less than the initial amount!");
         return;
       }
 
-      if (delta > 0) {
-        const newFish = getFishImage(newTook);
-        const currentFish = getFishImage(p.took);
-        if (newFish !== currentFish) {
-          setFishMessage(getFishLevelUpMessage(name, newTook));
-          setShowFishLevelUp(true);
-        }
-      }
-
       return { ...p, took: newTook };
     });
 
-    await updateDoc(gameRef, { players: updated });
+    await updateDoc(gameRef, {
+      players: updated,
+      fishLevelUp: {
+        name,
+        newTook,
+        timestamp: Date.now(),
+      },
+    });
   };
 
   const handleLeave = async () => {
@@ -155,14 +151,6 @@ const PlayerCard: FC<PlayerCardProps> = ({
           </Button>
         </DialogActions>
       </Dialog>
-
-      <FishLevelUpOverlay
-        open={showFishLevelUp}
-        playerName={name}
-        fishImg={getFishImage(took)}
-        onClose={() => setShowFishLevelUp(false)}
-        message={fishMessage}
-      />
     </>
   );
 };

@@ -7,6 +7,8 @@ import { Player } from "../types/player";
 import PlayerList from "../components/PlayerList";
 import AddPlayerForm from "../components/AddPlayerForm";
 import GameMenuDrawer from "../components/GameMenuDrawer";
+import FishLevelUpOverlay from "../components/FishLevelUpOverlay";
+import { getFishImage, getFishLevelUpMessage } from "../utils/fish";
 
 const GameInPlay: FC = () => {
   const { gameId } = useParams();
@@ -15,6 +17,11 @@ const GameInPlay: FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
   const [isHost, setIsHost] = useState(false);
+  const [showFishLevelUp, setShowFishLevelUp] = useState(false);
+  const [fishOverlayData, setFishOverlayData] = useState<{
+    name: string;
+    newTook: number;
+  } | null>(null);
 
   useEffect(() => {
     if (!gameId) return;
@@ -24,6 +31,21 @@ const GameInPlay: FC = () => {
 
       if (data) {
         setPlayers(data.players || []);
+
+        const fish = data.fishLevelUp;
+        const lastSeen = localStorage.getItem("lastFishLevelUp") || "0";
+
+        if (fish && fish.timestamp > Number(lastSeen)) {
+          localStorage.setItem("lastFishLevelUp", String(fish.timestamp));
+          setFishOverlayData({ name: fish.name, newTook: fish.newTook });
+          setShowFishLevelUp(true);
+
+          setTimeout(() => {
+            updateDoc(doc(db, "games", gameId!), {
+              fishLevelUp: null,
+            });
+          }, 3100);
+        }
 
         const localHostId = localStorage.getItem("hostId");
         setIsHost(data.hostId === localHostId);
@@ -62,6 +84,19 @@ const GameInPlay: FC = () => {
 
         <PlayerList players={players} gameId={gameId!} isHost={isHost} />
       </Stack>
+
+      {fishOverlayData && (
+        <FishLevelUpOverlay
+          open={showFishLevelUp}
+          playerName={fishOverlayData.name}
+          fishImg={getFishImage(fishOverlayData.newTook)}
+          message={getFishLevelUpMessage(
+            fishOverlayData.name,
+            fishOverlayData.newTook
+          )}
+          onClose={() => setShowFishLevelUp(false)}
+        />
+      )}
     </Container>
   );
 };
