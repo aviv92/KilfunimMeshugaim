@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://aviv92.github.io/KilfunimMeshugaim",
   "scripts": {
     "dev": "vite",
     "predeploy": "npm run build",
@@ -19,8 +20,9 @@
     "firebase": "^11.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-force-graph-2d": "^1.27.1",
     "react-router": "^7.3.0",
-    "react-router-dom": "^7.3.0",
+    "react-router-dom": "^7.4.0",
     "uuid": "^11.1.0",
     "zustand": "^4.5.4"
   },
