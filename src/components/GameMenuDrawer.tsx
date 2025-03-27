@@ -14,26 +14,17 @@ interface Props {
   isHost: boolean;
   gameId: string;
   onEndGame: () => void;
-  onRequestHost: () => void;
-  hostRequests?: string[];
-  onApproveHost?: (id: string) => void;
 }
 
-const GameMenuDrawer: FC<Props> = ({
-  isHost,
-  onEndGame,
-  onRequestHost,
-  gameId,
-  hostRequests,
-  onApproveHost,
-}) => {
+const GameMenuDrawer: FC<Props> = ({ isHost, onEndGame, gameId }) => {
   const [open, setOpen] = useState(false);
 
   const handleShare = () => {
-    const link = `${window.location.origin}/#/game/${gameId}/in-play`;
+    const link = `${window.location.origin}/KilfunimMeshugaim/#/game/${gameId}/in-play`;
     navigator.clipboard.writeText(link);
-    alert("Game link copied to clipboard!");
   };
+
+  if (!isHost) return null;
 
   return (
     <>
@@ -59,32 +50,14 @@ const GameMenuDrawer: FC<Props> = ({
             Game Menu
           </Typography>
 
-          {isHost ? (
-            <>
-              <MenuItem onClick={handleShare}>
-                <ShareIcon fontSize="small" sx={{ mr: 1 }} />
-                Share Game
-              </MenuItem>
-              <MenuItem onClick={onEndGame}>
-                <PowerSettingsNewIcon fontSize="small" sx={{ mr: 1 }} />
-                End Game
-              </MenuItem>
-            </>
-          ) : (
-            <MenuItem onClick={onRequestHost}>Request Host Access</MenuItem>
-          )}
-          {isHost && (hostRequests || [])?.length > 0 && (
-            <>
-              <Typography variant="subtitle2" sx={{ px: 2, pt: 1 }}>
-                Host Requests
-              </Typography>
-              {(hostRequests || []).map((id) => (
-                <MenuItem key={id} onClick={() => onApproveHost?.(id)}>
-                  Approve Host: {id.slice(0, 6)}...
-                </MenuItem>
-              ))}
-            </>
-          )}
+          <MenuItem onClick={handleShare}>
+            <ShareIcon fontSize="small" sx={{ mr: 1 }} />
+            Share Game
+          </MenuItem>
+          <MenuItem onClick={onEndGame}>
+            <PowerSettingsNewIcon fontSize="small" sx={{ mr: 1 }} />
+            End Game
+          </MenuItem>
         </MenuList>
       </Drawer>
     </>
