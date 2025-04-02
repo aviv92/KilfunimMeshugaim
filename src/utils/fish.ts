@@ -8,15 +8,22 @@ export const getFishLevelUpMessage = (
   playerName: string,
   newTook: number
 ): string => {
-  const messages: { threshold: number; message: (name: string) => string }[] = [
+  const messages: {
+    threshold: number;
+    message: (name: string, took?: number) => string;
+  }[] = [
     {
       threshold: 500,
-      message: (name) =>
-        `😅 ${name} just blew past 500... that’s a whale in trouble 🐋💸`,
+      message: (name, took) =>
+        `😅 ${name} just blew past ${took}... that’s a whale in trouble 🐋💸`,
+    },
+    {
+      threshold: 450,
+      message: (name) => `😅 ${name} now it's just sad`,
     },
     {
       threshold: 400,
-      message: (name) => `😬 ${name} is like the dead sea, minus 400💸`,
+      message: (name) => `😬 ${name} is like the dead sea, minus 400 💸`,
     },
     {
       threshold: 300,
@@ -50,6 +57,6 @@ export const getFishLevelUpMessage = (
 
   const entry = messages.find(({ threshold }) => newTook >= threshold);
   return entry
-    ? entry.message(playerName)
+    ? entry.message(playerName, newTook)
     : `${playerName} is testing the waters 🐠`;
 };
