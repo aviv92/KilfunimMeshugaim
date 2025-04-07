@@ -1,6 +1,6 @@
 // src/components/PlayerList.tsx
 import { FC } from "react";
-import PlayerCard from "./PlayerCard";
+import PlayerCard from "./PlayerCard/PlayerCard";
 import { Grid } from "@mui/material";
 import { Player } from "../types/player";
 

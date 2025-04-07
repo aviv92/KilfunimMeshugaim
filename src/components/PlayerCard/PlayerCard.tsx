@@ -4,22 +4,20 @@ import {
   Typography,
   IconButton,
   Stack,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  Button,
   CardContent,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import { DEFAULT_CHIP_AMOUNT } from "../utils/constants";
-import { getFishImage } from "../utils/fish";
-import { Player } from "../types/player";
+import { updateDoc } from "firebase/firestore";
+import { DEFAULT_CHIP_AMOUNT } from "../../utils/constants";
+import { getFishImage } from "../../utils/fish";
+import { Player } from "../../types/player";
+import { getFirestoreData, getFirestoreDocRef } from "../../utils/firestore";
+import { FirestoreData } from "../../types/firestore";
+import { Atm } from "@mui/icons-material";
+import LeaveEarlyDialog from "./components/LeaveEarlyDialog";
+import AtmDialog from "./components/AtmDialog";
 
 interface PlayerCardProps extends Player {
   gameId: string;
@@ -35,12 +33,12 @@ const PlayerCard: FC<PlayerCardProps> = ({
   isHost,
 }) => {
   const [leaveOpen, setLeaveOpen] = useState(false);
-  const [finalChips, setFinalChips] = useState("");
+  const [atmOpen, setAtmOpen] = useState(false);
 
   const updatePlayerChips = async (delta: number) => {
-    const gameRef = doc(db, "games", gameId);
-    const docSnap = await getDoc(gameRef);
-    const players: Player[] = docSnap.data()?.players ?? [];
+    const gameRef = getFirestoreDocRef(gameId);
+    const data = await getFirestoreData<FirestoreData>(gameId);
+    const players: Player[] = data?.players ?? [];
     let newTook = 0;
 
     const updated = players.map((p: Player) => {
@@ -63,23 +61,6 @@ const PlayerCard: FC<PlayerCardProps> = ({
         timestamp: Date.now(),
       },
     });
-  };
-
-  const handleLeave = async () => {
-    const value = Number(finalChips);
-    if (isNaN(value) || value < 0) return;
-
-    const gameRef = doc(db, "games", gameId);
-    const docSnap = await getDoc(gameRef);
-    const players = docSnap.data()?.players ?? [];
-
-    const updated = players.map((p: Player) =>
-      p.name === name ? { ...p, chips: value, leftEarly: true } : p
-    );
-
-    await updateDoc(gameRef, { players: updated });
-    setLeaveOpen(false);
-    setFinalChips("");
   };
 
   return (
@@ -121,6 +102,12 @@ const PlayerCard: FC<PlayerCardProps> = ({
                   <RemoveIcon />
                 </IconButton>
                 <IconButton
+                  onClick={() => setAtmOpen(true)}
+                  disabled={leftEarly}
+                >
+                  <Atm />
+                </IconButton>
+                <IconButton
                   onClick={() => setLeaveOpen(true)}
                   disabled={leftEarly}
                 >
@@ -132,25 +119,18 @@ const PlayerCard: FC<PlayerCardProps> = ({
         </CardContent>
       </Card>
 
-      <Dialog open={leaveOpen} onClose={() => setLeaveOpen(false)}>
-        <DialogTitle>Leaving Early?</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Final Chips"
-            type="number"
-            fullWidth
-            value={finalChips}
-            onChange={(e) => setFinalChips(e.target.value)}
-            autoFocus
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setLeaveOpen(false)}>Cancel</Button>
-          <Button onClick={handleLeave} variant="contained">
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <LeaveEarlyDialog
+        gameId={gameId}
+        name={name}
+        leaveOpen={leaveOpen}
+        setLeaveOpen={setLeaveOpen}
+      />
+
+      <AtmDialog
+        atmOpen={atmOpen}
+        setAtmOpen={setAtmOpen}
+        updatePlayerChips={updatePlayerChips}
+      />
     </>
   );
 };

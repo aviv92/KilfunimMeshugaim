@@ -14,3 +14,5 @@ export const allPlayerNames = [
 ];
 
 export const DEFAULT_CHIP_AMOUNT = 50;
+
+export const firebaseCollectionName = "games";
