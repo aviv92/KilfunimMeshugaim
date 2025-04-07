@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { onSnapshot } from "firebase/firestore";
 import { Container, CircularProgress, Stack } from "@mui/material";
 import { Player } from "../types/player";
 import PlayerList from "../components/PlayerList";
@@ -9,6 +8,7 @@ import AddPlayerForm from "../components/AddPlayerForm";
 import GameMenuDrawer from "../components/GameMenuDrawer";
 import FishLevelUpOverlay from "../components/FishLevelUpOverlay";
 import { getFishImage, getFishLevelUpMessage } from "../utils/fish";
+import { getFirestoreDocRef, updateFirestoreData } from "../utils/firestore";
 
 const GameInPlay: FC = () => {
   const { gameId } = useParams();
@@ -25,8 +25,9 @@ const GameInPlay: FC = () => {
 
   useEffect(() => {
     if (!gameId) return;
+    const docRef = getFirestoreDocRef(gameId);
 
-    const unsub = onSnapshot(doc(db, "games", gameId), (snap) => {
+    const unsub = onSnapshot(docRef, (snap) => {
       const data = snap.data();
 
       if (data) {
@@ -41,7 +42,7 @@ const GameInPlay: FC = () => {
           setShowFishLevelUp(true);
 
           setTimeout(() => {
-            updateDoc(doc(db, "games", gameId!), {
+            updateFirestoreData(gameId, {
               fishLevelUp: null,
             });
           }, 3100);
@@ -66,13 +67,7 @@ const GameInPlay: FC = () => {
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
       <Stack spacing={4} alignItems="center">
-        <GameMenuDrawer
-          isHost={isHost}
-          gameId={gameId!}
-          onEndGame={async () => {
-            await updateDoc(doc(db, "games", gameId!), { status: "closing" });
-          }}
-        />
+        <GameMenuDrawer isHost={isHost} gameId={gameId!} />
 
         {/* Add Player Form only if host */}
         {isHost && (

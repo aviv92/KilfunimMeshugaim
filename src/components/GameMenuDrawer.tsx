@@ -11,13 +11,14 @@ import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { updateFirestoreData } from "../utils/firestore";
+
 interface Props {
   isHost: boolean;
   gameId: string;
-  onEndGame: () => void;
 }
 
-const GameMenuDrawer: FC<Props> = ({ isHost, onEndGame, gameId }) => {
+const GameMenuDrawer: FC<Props> = ({ isHost, gameId }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -26,6 +27,9 @@ const GameMenuDrawer: FC<Props> = ({ isHost, onEndGame, gameId }) => {
     navigator.clipboard.writeText(link);
   };
 
+  const onEndGame = async () => {
+    await updateFirestoreData(gameId, { status: "closing" });
+  };
   return (
     <>
       <IconButton

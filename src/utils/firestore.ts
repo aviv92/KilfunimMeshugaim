@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { firebaseCollectionName } from "./constants";
 
@@ -22,4 +22,13 @@ export const getFirestoreData = async <T>(
 
   console.log("No such document!");
   return null;
+};
+
+export const updateFirestoreData = async <T>(
+  docId: string,
+  data: Partial<T>,
+  collectionName: string = firebaseCollectionName
+) => {
+  const docRef = getFirestoreDocRef(docId, collectionName);
+  await updateDoc(docRef, data);
 };

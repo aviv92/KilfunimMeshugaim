@@ -10,9 +10,9 @@ import {
   SelectChangeEvent,
   Stack,
 } from "@mui/material";
-import { db } from "../firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { allPlayerNames, DEFAULT_CHIP_AMOUNT } from "../utils/constants";
+import { getFirestoreData, updateFirestoreData } from "../utils/firestore";
+import { FirestoreData } from "../types/firestore";
 
 interface Props {
   gameId: string;
@@ -32,9 +32,7 @@ const AddPlayerForm: FC<Props> = ({ gameId, existingPlayers }) => {
   };
 
   const handleAdd = async () => {
-    const gameRef = doc(db, "games", gameId);
-    const docSnap = await getDoc(gameRef);
-    const existingData = docSnap.data();
+    const existingData = await getFirestoreData<FirestoreData>(gameId);
     const currentPlayers = existingData?.players || [];
 
     const newPlayers = selected.map((name) => ({
@@ -42,7 +40,7 @@ const AddPlayerForm: FC<Props> = ({ gameId, existingPlayers }) => {
       took: DEFAULT_CHIP_AMOUNT,
     }));
 
-    await updateDoc(gameRef, {
+    await updateFirestoreData(gameId, {
       players: [...currentPlayers, ...newPlayers],
     });
 

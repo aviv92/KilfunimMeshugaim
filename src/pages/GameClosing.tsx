@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { db } from "../firebase";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 import {
   Container,
   Typography,
@@ -12,6 +11,7 @@ import {
   Alert,
 } from "@mui/material";
 import { Player } from "../types/player";
+import { getFirestoreDocRef, updateFirestoreData } from "../utils/firestore";
 
 const GameClosing: FC = () => {
   const { gameId } = useParams();
@@ -33,7 +33,8 @@ const GameClosing: FC = () => {
   useEffect(() => {
     if (!gameId) return;
 
-    const unsub = onSnapshot(doc(db, "games", gameId), (snap) => {
+    const gameRef = getFirestoreDocRef(gameId);
+    const unsub = onSnapshot(gameRef, (snap) => {
       const data = snap.data();
       if (!data) return;
 
@@ -76,8 +77,7 @@ const GameClosing: FC = () => {
       return;
     }
 
-    const gameRef = doc(db, "games", gameId!);
-    await updateDoc(gameRef, {
+    await updateFirestoreData(gameId!, {
       players: updated,
       status: "ended",
     });

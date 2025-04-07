@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { db } from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
+
 import {
   Container,
   Typography,
@@ -17,6 +16,8 @@ import DebtTable from "../components/DebtTable";
 import DebtGraph from "../components/DebtGraph";
 import { formatDebtsForShare } from "../utils/shareMessage";
 import { useNavigate } from "react-router-dom";
+import { getFirestoreData } from "../utils/firestore";
+import { FirestoreData } from "../types/firestore";
 
 const GameEnded: FC = () => {
   const { gameId } = useParams();
@@ -28,8 +29,7 @@ const GameEnded: FC = () => {
   useEffect(() => {
     if (!gameId) return;
     const fetch = async () => {
-      const docSnap = await getDoc(doc(db, "games", gameId));
-      const data = docSnap.data();
+      const data = await getFirestoreData<FirestoreData>(gameId);
       if (data?.players) {
         setPlayers(data.players);
         setDebts(calculateDebts(data.players));
