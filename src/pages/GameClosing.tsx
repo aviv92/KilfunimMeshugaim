@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Player } from "../types/player";
 import { getFirestoreDocRef, updateFirestoreData } from "../utils/firestore";
+import PageBackground from "./PageBackground";
 
 const GameClosing: FC = () => {
   const { gameId } = useParams();
@@ -88,37 +89,39 @@ const GameClosing: FC = () => {
   if (loading) return <CircularProgress />;
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Stack spacing={4} alignItems="center">
-        <Typography variant="h4" mt={4}>
-          Final Chip Count
-        </Typography>
+    <PageBackground imageUrl="game-closing.jpg">
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Stack spacing={4} alignItems="center">
+          <Typography variant="h4" mt={4}>
+            Final Chip Count
+          </Typography>
 
-        {players.map((p) => (
-          <TextField
-            key={p.name}
-            label={p.name}
-            type="number"
-            value={finalChipsMap[p.name] || ""}
-            onChange={(e) => handleChange(p.name, e.target.value)}
-          />
-        ))}
+          {players.map((p) => (
+            <TextField
+              key={p.name}
+              label={p.name}
+              type="number"
+              value={finalChipsMap[p.name] || ""}
+              onChange={(e) => handleChange(p.name, e.target.value)}
+            />
+          ))}
 
-        {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
-            {error}
-          </Alert>
-        )}
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+          )}
 
-        <Typography mt={2}>
-          Balance remaining: {remainingBalance} chips
-        </Typography>
+          <Typography mt={2}>
+            Balance remaining: {remainingBalance} chips
+          </Typography>
 
-        <Button variant="contained" sx={{ mt: 3 }} onClick={handleSubmit}>
-          Finish & Show Results
-        </Button>
-      </Stack>
-    </Container>
+          <Button variant="contained" sx={{ mt: 3 }} onClick={handleSubmit}>
+            Finish & Show Results
+          </Button>
+        </Stack>
+      </Container>
+    </PageBackground>
   );
 };
 

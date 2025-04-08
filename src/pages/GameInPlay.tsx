@@ -9,6 +9,7 @@ import GameMenuDrawer from "../components/GameMenuDrawer";
 import FishLevelUpOverlay from "../components/FishLevelUpOverlay";
 import { getFishImage, getFishLevelUpMessage } from "../utils/fish";
 import { getFirestoreDocRef, updateFirestoreData } from "../utils/firestore";
+import PageBackground from "./PageBackground";
 
 const GameInPlay: FC = () => {
   const { gameId } = useParams();
@@ -65,34 +66,36 @@ const GameInPlay: FC = () => {
   if (loading) return <CircularProgress />;
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Stack spacing={4} alignItems="center">
-        <GameMenuDrawer isHost={isHost} gameId={gameId!} />
+    <PageBackground imageUrl="fish-play-bg.jpg">
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Stack spacing={4} alignItems="center">
+          <GameMenuDrawer isHost={isHost} gameId={gameId!} />
 
-        {/* Add Player Form only if host */}
-        {isHost && (
-          <AddPlayerForm
-            gameId={gameId!}
-            existingPlayers={players.map((p) => p.name)}
+          {/* Add Player Form only if host */}
+          {isHost && (
+            <AddPlayerForm
+              gameId={gameId!}
+              existingPlayers={players.map((p) => p.name)}
+            />
+          )}
+
+          <PlayerList players={players} gameId={gameId!} isHost={isHost} />
+        </Stack>
+
+        {fishOverlayData && (
+          <FishLevelUpOverlay
+            open={showFishLevelUp}
+            playerName={fishOverlayData.name}
+            fishImg={getFishImage(fishOverlayData.newTook)}
+            message={getFishLevelUpMessage(
+              fishOverlayData.name,
+              fishOverlayData.newTook
+            )}
+            onClose={() => setShowFishLevelUp(false)}
           />
         )}
-
-        <PlayerList players={players} gameId={gameId!} isHost={isHost} />
-      </Stack>
-
-      {fishOverlayData && (
-        <FishLevelUpOverlay
-          open={showFishLevelUp}
-          playerName={fishOverlayData.name}
-          fishImg={getFishImage(fishOverlayData.newTook)}
-          message={getFishLevelUpMessage(
-            fishOverlayData.name,
-            fishOverlayData.newTook
-          )}
-          onClose={() => setShowFishLevelUp(false)}
-        />
-      )}
-    </Container>
+      </Container>
+    </PageBackground>
   );
 };
 
