@@ -58,7 +58,7 @@ const MainMenu: FC = () => {
             }}
             onClick={handleCreateGame}
           >
-            Create New Game
+            New Game
           </Button>
         </Stack>
       </Container>
