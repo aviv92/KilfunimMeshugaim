@@ -26,7 +26,7 @@ const PageBackground: FC<Props> = ({ children, imageUrl }) => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           zIndex: -1,
-          opacity: 0.1,
+          opacity: 0.25,
         }}
       />
       {children}

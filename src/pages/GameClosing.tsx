@@ -89,7 +89,7 @@ const GameClosing: FC = () => {
   if (loading) return <CircularProgress />;
 
   return (
-    <PageBackground imageUrl="game-closing.jpg">
+    <PageBackground imageUrl="closing.jpg">
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         <Stack spacing={4} alignItems="center">
           <Typography variant="h4" mt={4}>

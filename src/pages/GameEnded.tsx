@@ -47,7 +47,7 @@ const GameEnded: FC = () => {
   };
 
   return (
-    <PageBackground imageUrl="game-ended.jpg">
+    <PageBackground imageUrl="ended.jpg">
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         <Stack spacing={4} alignItems="center">
           <Typography variant="h4" mt={4}>

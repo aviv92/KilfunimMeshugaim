@@ -28,7 +28,7 @@ const MainMenu: FC = () => {
   };
 
   return (
-    <PageBackground imageUrl="fish-main-bg.jpg">
+    <PageBackground imageUrl="main.jpg">
       <Container
         maxWidth="sm"
         sx={{

@@ -66,7 +66,7 @@ const GameInPlay: FC = () => {
   if (loading) return <CircularProgress />;
 
   return (
-    <PageBackground imageUrl="fish-play-bg.jpg">
+    <PageBackground imageUrl="in-play.jpg">
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         <Stack spacing={4} alignItems="center">
           <GameMenuDrawer isHost={isHost} gameId={gameId!} />
