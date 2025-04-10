@@ -7,6 +7,7 @@ import {
   Button,
 } from "@mui/material";
 import { FC, useState } from "react";
+import { DEFAULT_CHIP_AMOUNT } from "../../../utils/constants";
 
 type Props = {
   atmOpen: boolean;
@@ -15,7 +16,7 @@ type Props = {
 };
 
 const AtmDialog: FC<Props> = ({ atmOpen, setAtmOpen, updatePlayerChips }) => {
-  const [atmTake, setAtmTake] = useState("");
+  const [atmTake, setAtmTake] = useState(DEFAULT_CHIP_AMOUNT);
 
   const handleAtm = async () => {
     const value = Number(atmTake);
@@ -23,7 +24,7 @@ const AtmDialog: FC<Props> = ({ atmOpen, setAtmOpen, updatePlayerChips }) => {
 
     await updatePlayerChips(value);
     setAtmOpen(false);
-    setAtmTake("");
+    setAtmTake(DEFAULT_CHIP_AMOUNT);
   };
 
   return (
@@ -35,10 +36,24 @@ const AtmDialog: FC<Props> = ({ atmOpen, setAtmOpen, updatePlayerChips }) => {
           type="number"
           fullWidth
           value={atmTake}
-          onChange={(e) => setAtmTake(e.target.value)}
+          onChange={(e) => setAtmTake(Number(e.target.value))}
           autoFocus
         />
       </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT)}>
+          {DEFAULT_CHIP_AMOUNT}
+        </Button>
+        <Button onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 2)}>
+          {DEFAULT_CHIP_AMOUNT * 2}
+        </Button>
+        <Button onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 3)}>
+          {DEFAULT_CHIP_AMOUNT * 3}
+        </Button>
+        <Button onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 4)}>
+          {DEFAULT_CHIP_AMOUNT * 4}
+        </Button>
+      </DialogActions>
       <DialogActions>
         <Button onClick={() => setAtmOpen(false)}>Cancel</Button>
         <Button onClick={handleAtm} variant="contained">

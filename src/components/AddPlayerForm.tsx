@@ -42,6 +42,11 @@ const AddPlayerForm: FC<Props> = ({ gameId, existingPlayers }) => {
 
     await updateFirestoreData(gameId, {
       players: [...currentPlayers, ...newPlayers],
+      fishLevelUp: {
+        name: selected.join(", "),
+        newTook: DEFAULT_CHIP_AMOUNT,
+        timestamp: Date.now(),
+      },
     });
 
     setSelected([]);

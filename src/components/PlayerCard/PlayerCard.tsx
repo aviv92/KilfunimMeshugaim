@@ -15,7 +15,7 @@ import { getFishImage } from "../../utils/fish";
 import { Player } from "../../types/player";
 import { getFirestoreData, getFirestoreDocRef } from "../../utils/firestore";
 import { FirestoreData } from "../../types/firestore";
-import { Atm } from "@mui/icons-material";
+
 import LeaveEarlyDialog from "./components/LeaveEarlyDialog";
 import AtmDialog from "./components/AtmDialog";
 
@@ -71,17 +71,17 @@ const PlayerCard: FC<PlayerCardProps> = ({
             {/* Player Name */}
             <Stack direction="row" spacing={2} justifyContent="center">
               <Typography variant="h6" fontWeight="bold">
-                {name}
+                {name} {chips ? chips - took : took}
               </Typography>
             </Stack>
 
             {/* Took & Chips */}
-            <Stack direction="row" spacing={2} justifyContent="center">
+            {/* <Stack direction="row" spacing={2} justifyContent="center">
               <Typography variant="body2">🎲 Took: {took}</Typography>
               {chips && (
                 <Typography variant="body2">💰 Final: {chips}</Typography>
               )}
-            </Stack>
+            </Stack> */}
 
             {/* Fish Image */}
             <img src={getFishImage(took)} alt="fish" style={{ height: 60 }} />
@@ -90,7 +90,7 @@ const PlayerCard: FC<PlayerCardProps> = ({
             {isHost && (
               <Stack direction="row" spacing={1} justifyContent="center">
                 <IconButton
-                  onClick={() => updatePlayerChips(DEFAULT_CHIP_AMOUNT)}
+                  onClick={() => setAtmOpen(true)}
                   disabled={leftEarly}
                 >
                   <AddIcon />
@@ -100,12 +100,6 @@ const PlayerCard: FC<PlayerCardProps> = ({
                   disabled={leftEarly}
                 >
                   <RemoveIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => setAtmOpen(true)}
-                  disabled={leftEarly}
-                >
-                  <Atm />
                 </IconButton>
                 <IconButton
                   onClick={() => setLeaveOpen(true)}

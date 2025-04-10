@@ -11,9 +11,9 @@ interface PlayerListProps {
 }
 
 const PlayerList: FC<PlayerListProps> = ({ players, gameId, isHost }) => (
-  <Grid container spacing={2}>
+  <Grid container spacing={1}>
     {players.map((player) => (
-      <Grid item xs={12} sm={6} md={4} key={player.name}>
+      <Grid item xs={6} sm={6} md={4} key={player.name}>
         <PlayerCard
           key={player.name}
           gameId={gameId}

@@ -28,7 +28,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 16,
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backgroundColor: "rgba(255, 255, 255, 0)",
           boxShadow: "0 4px 20px rgba(0,0,0,0.25)",
         },
       },
