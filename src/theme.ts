@@ -42,6 +42,43 @@ const theme = createTheme({
           padding: "8px 20px",
           boxShadow: "0 3px 6px rgba(0,0,0,0.2)",
         },
+        contained: {
+          backgroundColor: "#2E8B57",
+          color: "#fff",
+          "&:hover": {
+            backgroundColor: "#FF4500",
+            boxShadow: "0 6px 12px rgba(0,0,0,0.3)",
+          },
+        },
+        outlined: {
+          backgroundColor: "#fff",
+          color: "#FF6347",
+          "&:hover": {
+            backgroundColor: "rgba(255, 99, 71, 0.1)",
+            boxShadow: "0 6px 12px rgba(0,0,0,0.3)",
+          },
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          border: "1px solid #ccc",
+          "&:hover": {
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+          },
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 16,
+          backgroundColor: "#fff",
+          opacity: 0.9,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.25)",
+        },
       },
     },
     MuiSelect: {

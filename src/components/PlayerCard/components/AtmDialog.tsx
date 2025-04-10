@@ -41,21 +41,35 @@ const AtmDialog: FC<Props> = ({ atmOpen, setAtmOpen, updatePlayerChips }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT)}>
+        <Button
+          variant="outlined"
+          onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT)}
+        >
           {DEFAULT_CHIP_AMOUNT}
         </Button>
-        <Button onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 2)}>
+        <Button
+          variant="outlined"
+          onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 2)}
+        >
           {DEFAULT_CHIP_AMOUNT * 2}
         </Button>
-        <Button onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 3)}>
+        <Button
+          variant="outlined"
+          onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 3)}
+        >
           {DEFAULT_CHIP_AMOUNT * 3}
         </Button>
-        <Button onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 4)}>
+        <Button
+          variant="outlined"
+          onClick={() => setAtmTake(DEFAULT_CHIP_AMOUNT * 4)}
+        >
           {DEFAULT_CHIP_AMOUNT * 4}
         </Button>
       </DialogActions>
       <DialogActions>
-        <Button onClick={() => setAtmOpen(false)}>Cancel</Button>
+        <Button variant="outlined" onClick={() => setAtmOpen(false)}>
+          Cancel
+        </Button>
         <Button onClick={handleAtm} variant="contained">
           Confirm
         </Button>
