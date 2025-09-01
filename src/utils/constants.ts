@@ -11,6 +11,7 @@ export const allPlayerNames = [
   "Tamir",
   "Yoni",
   "Yotam",
+  "Zed",
 ];
 
 export const DEFAULT_CHIP_AMOUNT = 50;

@@ -59,7 +59,9 @@ const LeaveEarlyDialog: FC<Props> = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setLeaveOpen(false)}>Cancel</Button>
+        <Button onClick={() => setLeaveOpen(false)} variant="outlined">
+          Cancel
+        </Button>
         <Button onClick={handleLeave} variant="contained">
           Confirm
         </Button>
