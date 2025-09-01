@@ -14,14 +14,10 @@ const MainMenu: FC = () => {
     const newGameId = uuidv4();
     const gameRef = getFirestoreDocRef(newGameId);
 
-    const hostId = crypto.randomUUID();
-    localStorage.setItem("hostId", hostId);
-
     await setDoc(gameRef, {
       status: "in-play",
       players: [],
       createdAt: Date.now(),
-      hostId,
     });
 
     navigate(`/game/${newGameId}/in-play`);

@@ -17,7 +17,6 @@ const GameInPlay: FC = () => {
 
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isHost, setIsHost] = useState(false);
   const [showFishLevelUp, setShowFishLevelUp] = useState(false);
   const [fishOverlayData, setFishOverlayData] = useState<{
     name: string;
@@ -49,9 +48,6 @@ const GameInPlay: FC = () => {
           }, 3100);
         }
 
-        const localHostId = localStorage.getItem("hostId");
-        setIsHost(data.hostId === localHostId);
-
         if (data.status !== "in-play") {
           navigate(`/game/${gameId}/${data.status}`);
         }
@@ -69,17 +65,14 @@ const GameInPlay: FC = () => {
     <PageBackground imageUrl="in-play.jpg">
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         <Stack spacing={4} alignItems="center">
-          <GameMenuDrawer isHost={isHost} gameId={gameId!} />
+          <GameMenuDrawer gameId={gameId!} />
 
-          {/* Add Player Form only if host */}
-          {isHost && (
-            <AddPlayerForm
-              gameId={gameId!}
-              existingPlayers={players.map((p) => p.name)}
-            />
-          )}
+          <AddPlayerForm
+            gameId={gameId!}
+            existingPlayers={players.map((p) => p.name)}
+          />
 
-          <PlayerList players={players} gameId={gameId!} isHost={isHost} />
+          <PlayerList players={players} gameId={gameId!} />
         </Stack>
 
         {fishOverlayData && (

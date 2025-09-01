@@ -7,19 +7,13 @@ import { Player } from "../types/player";
 interface PlayerListProps {
   players: Player[];
   gameId: string;
-  isHost?: boolean;
 }
 
-const PlayerList: FC<PlayerListProps> = ({ players, gameId, isHost }) => (
+const PlayerList: FC<PlayerListProps> = ({ players, gameId }) => (
   <Grid container spacing={1}>
     {players.map((player) => (
       <Grid item xs={6} sm={6} md={4} key={player.name}>
-        <PlayerCard
-          key={player.name}
-          gameId={gameId}
-          {...player}
-          isHost={isHost}
-        />
+        <PlayerCard key={player.name} gameId={gameId} {...player} />
       </Grid>
     ))}
   </Grid>

@@ -14,11 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { updateFirestoreData } from "../utils/firestore";
 
 interface Props {
-  isHost: boolean;
   gameId: string;
 }
 
-const GameMenuDrawer: FC<Props> = ({ isHost, gameId }) => {
+const GameMenuDrawer: FC<Props> = ({ gameId }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -58,12 +57,10 @@ const GameMenuDrawer: FC<Props> = ({ isHost, gameId }) => {
             <ShareIcon fontSize="small" sx={{ mr: 1 }} />
             Share Game
           </MenuItem>
-          {isHost && (
-            <MenuItem onClick={onEndGame}>
-              <PowerSettingsNewIcon fontSize="small" sx={{ mr: 1 }} />
-              End Game
-            </MenuItem>
-          )}
+          <MenuItem onClick={onEndGame}>
+            <PowerSettingsNewIcon fontSize="small" sx={{ mr: 1 }} />
+            End Game
+          </MenuItem>
           <MenuItem onClick={() => navigate("/")}>
             <MenuIcon fontSize="small" sx={{ mr: 1 }} />
             Back to Main Menu

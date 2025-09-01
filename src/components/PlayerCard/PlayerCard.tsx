@@ -21,7 +21,6 @@ import AtmDialog from "./components/AtmDialog";
 
 interface PlayerCardProps extends Player {
   gameId: string;
-  isHost?: boolean;
 }
 
 const PlayerCard: FC<PlayerCardProps> = ({
@@ -30,7 +29,6 @@ const PlayerCard: FC<PlayerCardProps> = ({
   chips,
   took,
   leftEarly,
-  isHost,
 }) => {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [atmOpen, setAtmOpen] = useState(false);
@@ -87,28 +85,23 @@ const PlayerCard: FC<PlayerCardProps> = ({
             <img src={getFishImage(took)} alt="fish" style={{ height: 60 }} />
 
             {/* Action Buttons */}
-            {isHost && (
-              <Stack direction="row" spacing={1} justifyContent="center">
-                <IconButton
-                  onClick={() => setAtmOpen(true)}
-                  disabled={leftEarly}
-                >
-                  <AddIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => updatePlayerChips(-DEFAULT_CHIP_AMOUNT)}
-                  disabled={leftEarly}
-                >
-                  <RemoveIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => setLeaveOpen(true)}
-                  disabled={leftEarly}
-                >
-                  <ExitToAppIcon />
-                </IconButton>
-              </Stack>
-            )}
+            <Stack direction="row" spacing={1} justifyContent="center">
+              <IconButton onClick={() => setAtmOpen(true)} disabled={leftEarly}>
+                <AddIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => updatePlayerChips(-DEFAULT_CHIP_AMOUNT)}
+                disabled={leftEarly}
+              >
+                <RemoveIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => setLeaveOpen(true)}
+                disabled={leftEarly}
+              >
+                <ExitToAppIcon />
+              </IconButton>
+            </Stack>
           </Stack>
         </CardContent>
       </Card>
